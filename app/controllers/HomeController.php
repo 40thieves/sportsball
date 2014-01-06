@@ -22,7 +22,7 @@ class HomeController extends BaseController {
 
 	public function trigger()
 	{
-		Pusherer::trigger('my-channel', 'my-event', array('message' => 'Hello world'));
+		Pusherer::trigger('test-channel', 'test-event', array('message' => 'Hello world'));
 	}
 
 }

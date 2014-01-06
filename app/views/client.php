@@ -12,11 +12,11 @@
 
 		<script>
 			var pusher = new Pusher('7b6a2e8dc8823ec90e0f')
-			,	channel = pusher.subscribe('my-channel')
+			,	channel = pusher.subscribe('test-channel')
 			;
 
-			channel.bind('my-event', function(data) {
-				console.log('foo');
+			channel.bind('test-event', function(data) {
+				console.log('Notification recieved!');
 			});
 		</script>
 	</div>
