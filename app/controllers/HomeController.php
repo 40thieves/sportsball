@@ -15,9 +15,14 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function showWelcome()
+	public function showClient()
 	{
-		return View::make('hello');
+		return View::make('client');
+	}
+
+	public function trigger()
+	{
+		Pusherer::trigger('my-channel', 'my-event', array('message' => 'Hello world'));
 	}
 
 }

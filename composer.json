@@ -4,8 +4,8 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.1.*",
-		"artdarek/pusherer": "dev-master"
+		"artdarek/pusherer": "dev-master",
+		"laravel/framework": "4.1.*"
 	},
 	"autoload": {
 		"classmap": [
