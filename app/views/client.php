@@ -11,7 +11,7 @@
 		<h1>Pusher Test</h1>
 
 		<script>
-			var pusher = new Pusher('7b6a2e8dc8823ec90e0f')
+			var pusher = new Pusher(<?php echo '\'' . Config::get('pusherer::key') . '\'' ?>)
 			,	channel = pusher.subscribe('test-channel')
 			;
 
