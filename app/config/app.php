@@ -107,6 +107,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
+		'Artdarek\Pusherer\PushererServiceProvider',
 	),
 
 	/*
