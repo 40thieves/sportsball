@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', 'HomeController@showWelcome');
+Route::get('/', 'HomeController@showClient');
 
 Route::get('trigger', 'HomeController@trigger');
