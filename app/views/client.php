@@ -17,6 +17,7 @@
 
 			channel.bind('test-event', function(data) {
 				console.log('Notification recieved!');
+				console.log('Here\'s the data: ', data);
 			});
 		</script>
 	</div>
