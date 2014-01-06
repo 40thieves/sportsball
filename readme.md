@@ -1,6 +1,8 @@
 ## Sportsball
 
-### API for delivering sports statistics and updates over websockets, built on Laravel, for Portsmouth University Web Research unit. Still a WIP.
+### Realtime sports API
+
+API for delivering sports statistics and updates over websockets, built on Laravel, for Portsmouth University Web Research unit. Still a WIP.
 
 #### Requirements
 
