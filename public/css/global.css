@@ -1,0 +1,27 @@
+body {
+	font-family:arial;
+}
+
+tr:hover {
+	cursor:pointer;
+}
+
+td {
+	padding:5px;
+	font-size:18px;
+	font-weight:bold;
+}
+
+td.goals {
+	color:white;
+	background:black;
+}
+
+td.team {
+	background:gray;
+	width:200px;
+}
+
+td.team.home {
+	text-align:right;
+}
