@@ -28,6 +28,10 @@
 			</tbody>
 		</table>
 
+		<form id="form">
+			<button>Test</button>
+		</form>
+
 		<script>
 			var pusher = new Pusher(<?php echo '\'' . Config::get('pusherer::key') . '\'' ?>)
 			,	channel = pusher.subscribe('test-channel')
