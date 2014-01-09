@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Pusher Test</h1>
+	<h1>Premier League Matches</h1>
 
 	<table class="fixtures" cellspacing="0">
 		<tbody>
@@ -19,10 +19,6 @@
 			</tr>
 		</tbody>
 	</table>
-
-	<form id="form">
-		<button>Test</button>
-	</form>
 
 	<script>
 		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }})
