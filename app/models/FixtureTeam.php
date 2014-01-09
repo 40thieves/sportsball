@@ -30,8 +30,8 @@ class FixtureTeam extends Eloquent {
 		'homeTeam',
 	];
 
-	public function teamName()
+	public function teamDetails()
 	{
-		return $this->hasOne('Team', 'teamID');
+		return $this->hasOne('Team', 'teamID', 'teamID');
 	}
 }

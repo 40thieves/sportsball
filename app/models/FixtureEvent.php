@@ -33,7 +33,7 @@ class FixtureEvent extends Eloquent {
 
 	public function eventType()
 	{
-		return $this->hasOne('EventType', 'eventID');
+		return $this->hasOne('EventType', 'eventID', 'eventID');
 	}
 
 	public function player()

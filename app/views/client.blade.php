@@ -5,18 +5,14 @@
 
 	<table class="fixtures" cellspacing="0">
 		<tbody>
-			<tr id="match123">
-				<td class="team home">Arsenal</td>
-				<td class="goals homeGoals">0</td>
-				<td class="goals awayGoals">1</td>
-				<td class="team away">Chelsea</td>
-			</tr>
-			<tr id="match124">
-				<td class="team home">Crystal Palace</td>
-				<td class="goals homeGoals">2</td>
-				<td class="goals awayGoals">0</td>
-				<td class="team away">Tottenham</td>
-			</tr>
+			@foreach ($fixtures as $fixture)
+				<tr id="{{$fixture->fixtureID}}">
+					<td class="team home">{{$fixture->teams->home->teamDetails->name}}</td>
+					<td class="goals homeGoals">{{$fixture->teams->home->goals}}</td>
+					<td class="goals awayGoals">{{$fixture->teams->away->goals}}</td>
+					<td class="team away">{{$fixture->teams->away->teamDetails->name}}</td>
+				</tr>
+			@endforeach
 		</tbody>
 	</table>
 

@@ -19,8 +19,40 @@ class HomeController extends BaseController {
 
 	public function showClient()
 	{
+		$fixtures = Fixture::getAllOngoing();
+
+		foreach($fixtures as $fixture)
+		{
+			foreach($fixture->teams as $team)
+			{
+				if ($team->homeTeam)
+					$fixture->teams->home = $team;
+				else
+					$fixture->teams->away = $team;
+			}
+
+			$goals = [];
+			foreach($fixture->events as $event)
+			{
+				// Goals
+				if ($event->eventID == 1)
+				{
+					if ( ! isset($goals[$event->teamID]))
+						$goals[$event->teamID] = 1;
+					else
+						$goals[$event->teamID]++;
+				}
+			}
+
+			$fixture->teams->home->goals = isset($goals[$fixture->teams->home->teamID]) ? $goals[$fixture->teams->home->teamID] : 0;
+			$fixture->teams->away->goals = isset($goals[$fixture->teams->away->teamID]) ? $goals[$fixture->teams->away->teamID] : 0;
+
+			// Log::debug(print_r($fixture->stadium, true));
+		}
+
 		return $this->layout->content = View::make('client', [
 			'pusherKey' => Config::get('pusherer::key'),
+			'fixtures' => $fixtures,
 		]);
 	}
 
