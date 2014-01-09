@@ -19,7 +19,10 @@ class HomeController extends BaseController {
 
 	public function showClient()
 	{
-		return $this->layout->content = View::make('client');
+		return $this->layout->content = View::make('client', [
+			'pusherKey' => Config::get('pusherer::key'),
+			'foo' => 'bar'
+		]);
 	}
 
 	public function trigger()

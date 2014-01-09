@@ -25,7 +25,7 @@
 	</form>
 
 	<script>
-		var pusher = new Pusher(<?php echo '\'' . Config::get('pusherer::key') . '\'' ?>)
+		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }})
 		,	channel = pusher.subscribe('test-channel')
 		;
 
