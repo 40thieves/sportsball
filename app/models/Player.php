@@ -37,4 +37,9 @@ class Player extends Eloquent {
 	protected $guarded = [
 		'playerID',
 	];
+
+	public function teamName()
+	{
+		return $this->hasOne('Team', 'teamID');
+	}
 }

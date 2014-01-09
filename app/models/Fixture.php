@@ -36,4 +36,24 @@ class Fixture extends Eloquent {
 		'fixtureID',
 	];
 
+	public function events()
+	{
+		return $this->hasMany('FixtureEvent', 'fixtureID');
+	}
+
+	public function teams()
+	{
+		return $this->hasMany('FixtureTeam', 'fixtureID');
+	}
+
+	public function stadium()
+	{
+		return $this->hasOne('Stadium', 'stadiumID');
+	}
+
+	public static function getAllOngoing()
+	{
+		return self::where('isOngoing', '1')->get();
+	}
+
 }

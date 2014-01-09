@@ -29,4 +29,9 @@ class FixtureTeam extends Eloquent {
 		'teamID',
 		'homeTeam',
 	];
+
+	public function teamName()
+	{
+		return $this->hasOne('Team', 'teamID');
+	}
 }

@@ -30,4 +30,14 @@ class FixtureEvent extends Eloquent {
 		'playerID',
 		'minute',
 	];
+
+	public function eventType()
+	{
+		return $this->hasOne('EventType', 'eventID');
+	}
+
+	public function player()
+	{
+		return $this->hasOne('Player', 'playerID');
+	}
 }
