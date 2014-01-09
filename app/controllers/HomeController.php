@@ -15,9 +15,11 @@ class HomeController extends BaseController {
 	|
 	*/
 
+	protected $layout = 'layouts.master';
+
 	public function showClient()
 	{
-		return View::make('client');
+		return $this->layout->content = View::make('client');
 	}
 
 	public function trigger()
