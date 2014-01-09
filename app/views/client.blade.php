@@ -8,8 +8,8 @@
 			@foreach ($fixtures as $fixture)
 				<tr id="{{$fixture->fixtureID}}">
 					<td class="team home">{{$fixture->teams->home->teamDetails->name}}</td>
-					<td class="goals homeGoals">0</td>
-					<td class="goals awayGoals">1</td>
+					<td class="goals homeGoals">{{$fixture->teams->home->goals}}</td>
+					<td class="goals awayGoals">{{$fixture->teams->away->goals}}</td>
 					<td class="team away">{{$fixture->teams->away->teamDetails->name}}</td>
 				</tr>
 			@endforeach

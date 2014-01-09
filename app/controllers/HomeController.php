@@ -23,12 +23,6 @@ class HomeController extends BaseController {
 
 		foreach($fixtures as $fixture)
 		{
-			// $matchEvents = $fixture->events;
-			// foreach($fixture->events as $event)
-			// {
-			// 	Log::debug(print_r($event->eventType->label, true));
-			// }
-
 			foreach($fixture->teams as $team)
 			{
 				if ($team->homeTeam)
@@ -36,6 +30,22 @@ class HomeController extends BaseController {
 				else
 					$fixture->teams->away = $team;
 			}
+
+			$goals = [];
+			foreach($fixture->events as $event)
+			{
+				// Goals
+				if ($event->eventID == 1)
+				{
+					if ( ! isset($goals[$event->teamID]))
+						$goals[$event->teamID] = 1;
+					else
+						$goals[$event->teamID]++;
+				}
+			}
+
+			$fixture->teams->home->goals = isset($goals[$fixture->teams->home->teamID]) ? $goals[$fixture->teams->home->teamID] : 0;
+			$fixture->teams->away->goals = isset($goals[$fixture->teams->away->teamID]) ? $goals[$fixture->teams->away->teamID] : 0;
 
 			// Log::debug(print_r($fixture->stadium, true));
 		}
