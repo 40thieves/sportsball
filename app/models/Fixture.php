@@ -110,6 +110,21 @@ class Fixture extends Eloquent {
 		return $fixture;
 	}
 
+	public static function getSingleOngoingTeams($id)
+	{
+		return self::_getOngoingWithTeam()
+			->where('fixtureID', $id)
+			->firstOrFail();
+	}
+
+	public static function getSingleOngoingStadium($id)
+	{
+		return self::_getOngoingWithTeam()
+			->where('fixtureID', $id)
+			->with('stadium')
+			->firstOrFail();
+	}
+
 	protected static function calculateGoals($events, $homeTeamId, $awayTeamId)
 	{
 		$goals = [];

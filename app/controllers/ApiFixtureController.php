@@ -19,12 +19,12 @@ class ApiFixtureController extends ApiController {
 
 	public static function getTeams($id)
 	{
-
+		return Fixture::getSingleOngoingTeams($id);
 	}
 
 	public static function getStadium($id)
 	{
-
+		return Fixture::getSingleOngoingStadium($id);
 	}
 
 }
