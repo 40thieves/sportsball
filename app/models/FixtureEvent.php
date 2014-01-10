@@ -36,8 +36,14 @@ class FixtureEvent extends Eloquent {
 		return $this->hasOne('EventType', 'eventID', 'eventID');
 	}
 
+	public function goals()
+	{
+		return $this->hasOne('EventType', 'eventID', 'eventID')->where('eventID', '1');
+	}
+
 	public function player()
 	{
 		return $this->hasOne('Player', 'playerID');
 	}
+
 }

@@ -14,3 +14,11 @@
 Route::get('/', 'HomeController@showClient');
 
 Route::get('trigger', 'HomeController@trigger');
+
+Route::group(['prefix' => 'api'], function() {
+
+	Route::group(['prefix' => 'fixture'], function() {
+		Route::get('/', 'ApiFixtureController@getAll');
+		Route::get('/{id}', 'ApiFixtureController@getSingle');
+	});
+});

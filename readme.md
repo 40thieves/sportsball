@@ -17,3 +17,18 @@ API for delivering sports statistics and updates over websockets, built on Larav
 #### (WIP) Usage
 
 On the homepage, open up the JS console. On another tab, or in another browser, navigate to `/trigger`.
+
+#### Quick API docs
+
+* /api
+	* /fixture - list of fixtures
+	* /fixture/:id - teams, score, stadium, events
+		* /score - calculated score
+		* /teams - teams playing
+		* /events - list of events
+		* /stadium - stadium
+	* /team - list of teams
+	* /team/:id - team info, players
+		* /players - team players
+	* /player - list of players
+	* /player/:id - player info

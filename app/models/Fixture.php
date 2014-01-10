@@ -46,6 +46,16 @@ class Fixture extends Eloquent {
 		return $this->hasMany('FixtureTeam', 'fixtureID');
 	}
 
+	public function homeTeam()
+	{
+		return $this->hasOne('FixtureTeam', 'fixtureID')->where('homeTeam', '1');
+	}
+
+	public function awayTeam()
+	{
+		return $this->hasOne('FixtureTeam', 'fixtureID')->where('homeTeam', '!=', '1');
+	}
+
 	public function stadium()
 	{
 		return $this->hasOne('Stadium', 'stadiumID');
@@ -54,6 +64,13 @@ class Fixture extends Eloquent {
 	public static function getAllOngoing()
 	{
 		return self::where('isOngoing', '1')->get();
+	}
+
+	public static function getSingleOngoing($id)
+	{
+		return self::where('fixtureID', $id)
+			->where('isOngoing', '1')
+			->firstOrFail();
 	}
 
 }
