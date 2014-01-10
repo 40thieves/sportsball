@@ -7,10 +7,10 @@
 		<tbody>
 			@foreach ($fixtures as $fixture)
 				<tr id="{{$fixture->fixtureID}}">
-					<td class="team home">{{$fixture->teams->home->teamDetails->name}}</td>
-					<td class="goals homeGoals">{{$fixture->teams->home->goals}}</td>
-					<td class="goals awayGoals">{{$fixture->teams->away->goals}}</td>
-					<td class="team away">{{$fixture->teams->away->teamDetails->name}}</td>
+					<td class="team home">{{$fixture->homeTeam->teamDetails->name}}</td>
+					<td class="goals homeGoals">{{$fixture->homeTeam->goals}}</td>
+					<td class="goals awayGoals">{{$fixture->awayTeam->goals}}</td>
+					<td class="team away">{{$fixture->awayTeam->teamDetails->name}}</td>
 				</tr>
 			@endforeach
 		</tbody>
