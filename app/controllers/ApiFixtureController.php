@@ -14,7 +14,7 @@ class ApiFixtureController extends ApiController {
 
 	public static function getScore($id)
 	{
-
+		return Fixture::getSingleOngoingGoals($id);
 	}
 
 	public static function getTeams($id)

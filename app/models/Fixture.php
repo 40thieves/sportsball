@@ -94,6 +94,22 @@ class Fixture extends Eloquent {
 		return $fixture;
 	}
 
+	public static function getSingleOngoingGoals($id)
+	{
+		$fixture = self::where('fixtureID', $id)
+			->where('isOngoing', '1')
+			->with('homeTeam.teamDetails')
+			->with('awayTeam.teamDetails')
+			->with('events')
+			->firstOrFail();
+
+		$goals = self::calculateGoals($fixture->events, $fixture->homeTeam->teamID, $fixture->awayTeam->teamID);
+		$fixture->homeTeam->goals = $goals['homeGoals'];
+		$fixture->awayTeam->goals = $goals['awayGoals'];
+
+		return $fixture;
+	}
+
 	protected static function calculateGoals($events, $homeTeamId, $awayTeamId)
 	{
 		$goals = [];

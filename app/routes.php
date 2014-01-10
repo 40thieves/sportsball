@@ -19,6 +19,7 @@ Route::group(['prefix' => 'api'], function() {
 
 	Route::group(['prefix' => 'fixture'], function() {
 		Route::get('/', 'ApiFixtureController@getAll');
-		Route::get('/{id}', 'ApiFixtureController@getSingle');
+		Route::get('{id}', 'ApiFixtureController@getSingle');
+		Route::get('{id}/score', 'ApiFixtureController@getScore');
 	});
 });
