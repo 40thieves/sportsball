@@ -69,20 +69,22 @@ class Fixture extends Eloquent {
 		return $this->hasOne('Stadium', 'stadiumID');
 	}
 
-	public static function getAllOngoing()
+	protected static function _getOngoingWithTeam()
 	{
 		return self::where('isOngoing', '1')
 			->with('homeTeam.teamDetails')
-			->with('awayTeam.teamDetails')
-			->get();
+			->with('awayTeam.teamDetails');
+	}
+
+	public static function getAllOngoing()
+	{
+		return self::_getOngoingWithTeam()->get();
 	}
 
 	public static function getSingleOngoing($id)
 	{
-		$fixture = self::where('fixtureID', $id)
-			->where('isOngoing', '1')
-			->with('homeTeam.teamDetails')
-			->with('awayTeam.teamDetails')
+		$fixture = self::_getOngoingWithTeam()
+			->where('fixtureID', $id)
 			->with('events.eventType', 'events.player')
 			->with('stadium')
 			->firstOrFail();
@@ -96,10 +98,8 @@ class Fixture extends Eloquent {
 
 	public static function getSingleOngoingGoals($id)
 	{
-		$fixture = self::where('fixtureID', $id)
-			->where('isOngoing', '1')
-			->with('homeTeam.teamDetails')
-			->with('awayTeam.teamDetails')
+		$fixture = self::_getOngoingWithTeam()
+			->where('fixtureID', $id)
 			->with('events')
 			->firstOrFail();
 
