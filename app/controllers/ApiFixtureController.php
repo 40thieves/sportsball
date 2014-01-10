@@ -4,39 +4,15 @@ class ApiFixtureController extends ApiController {
 
 	public static function getAll()
 	{
-		return 'getAll';
+		$fixtures = Fixture::getAllOngoing();
 
-		// foreach($fixtures as $fixture)
-		// {
-		// 	$fixture->load('homeTeam.teamDetails', 'awayTeam.teamDetails');
-
-		// 	// $goals = [];
-		// 	// foreach($fixture->events as $event)
-		// 	// {
-		// 	// 	// Goals
-		// 	// 	if ($event->eventID == 1)
-		// 	// 	{
-		// 	// 		if ( ! isset($goals[$event->teamID]))
-		// 	// 			$goals[$event->teamID] = 1;
-		// 	// 		else
-		// 	// 			$goals[$event->teamID]++;
-		// 	// 	}
-		// 	// }
-
-		// 	// $fixture->teams->home->goals = isset($goals[$fixture->teams->home->teamID]) ? $goals[$fixture->teams->home->teamID] : 0;
-		// 	// $fixture->teams->away->goals = isset($goals[$fixture->teams->away->teamID]) ? $goals[$fixture->teams->away->teamID] : 0;
-
-		// 	// Log::debug(print_r($fixture->stadium, true));
-		// }
-
-		// return $fixtures;
+		return $fixtures;
 	}
 
 	public static function getSingle($id)
 	{
 		$fixture = Fixture::getSingleOngoing($id);
 
-		$fixture->load('homeTeam.teamDetails', 'awayTeam.teamDetails');
 		$fixture->load('events.eventType', 'events.player');
 		$fixture->load('stadium');
 

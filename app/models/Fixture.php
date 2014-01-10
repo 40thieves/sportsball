@@ -36,6 +36,14 @@ class Fixture extends Eloquent {
 		'fixtureID',
 	];
 
+	/**
+	 * Model attributes that are hidden from JSON conversion
+	 * @var array
+	 */
+	protected $hidden = [
+		'isOngoing',
+	];
+
 	public function events()
 	{
 		return $this->hasMany('FixtureEvent', 'fixtureID');
@@ -63,13 +71,18 @@ class Fixture extends Eloquent {
 
 	public static function getAllOngoing()
 	{
-		return self::where('isOngoing', '1')->get();
+		return self::where('isOngoing', '1')
+			->with('homeTeam.teamDetails')
+			->with('awayTeam.teamDetails')
+			->get();
 	}
 
 	public static function getSingleOngoing($id)
 	{
 		return self::where('fixtureID', $id)
 			->where('isOngoing', '1')
+			->with('homeTeam.teamDetails')
+			->with('awayTeam.teamDetails')
 			->firstOrFail();
 	}
 
