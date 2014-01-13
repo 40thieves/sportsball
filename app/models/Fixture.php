@@ -125,6 +125,20 @@ class Fixture extends Eloquent {
 			->firstOrFail();
 	}
 
+	public static function testIsOngoing($id)
+	{
+		try {
+			$fixture = self::where('fixtureID', $id)
+				->where('isOngoing', '1')
+				->firstOrFail();
+		}
+		catch (ModelNotFoundException $e) {
+			App::abort('404', 'Fixture not found');
+		}
+
+		return $fixture;
+	}
+
 	protected static function calculateGoals($events, $homeTeamId, $awayTeamId)
 	{
 		$goals = [];

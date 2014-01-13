@@ -77,7 +77,9 @@ class FixtureEvent extends Eloquent {
 	{
 		$event = new self;
 
-		$event->fixtureID = Input::get('fixtureID');
+		$fixture = Fixture::testIsOngoing(Input::get('fixtureID'));
+
+		$event->fixtureID = $fixture->fixtureID;
 		$event->eventID = Input::get('eventID');
 		$event->teamID = Input::get('teamID');
 		$event->playerID = Input::get('playerID');
