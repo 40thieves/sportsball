@@ -12,4 +12,9 @@ class ApiEventsController extends ApiController {
 		return FixtureEvent::getSingleOngoing($id);
 	}
 
+	public static function postIndex()
+	{
+		return FixtureEvent::createSingle();
+	}
+
 }

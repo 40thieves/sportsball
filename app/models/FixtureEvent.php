@@ -27,6 +27,7 @@ class FixtureEvent extends Eloquent {
 	protected $fillable = [
 		'fixtureID',
 		'eventID',
+		'teamID',
 		'playerID',
 		'minute',
 	];
@@ -60,6 +61,31 @@ class FixtureEvent extends Eloquent {
 		});
 
 		return $events->load('eventType');
+	}
+
+	public static function getSingleOngoing($id)
+	{
+		$event = self::find($id);
+
+		if ($event->fixture->isOngoing != '1')
+			return App::abort('404', 'Fixture not found');
+
+		return $event->load('eventType');
+	}
+
+	public static function createSingle()
+	{
+		$event = new self;
+
+		$event->fixtureID = Input::get('fixtureID');
+		$event->eventID = Input::get('eventID');
+		$event->teamID = Input::get('teamID');
+		$event->playerID = Input::get('playerID');
+		$event->minute = Input::get('minute');
+
+		$event->save();
+
+		return $event;
 	}
 
 }

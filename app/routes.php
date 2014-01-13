@@ -27,5 +27,8 @@ Route::group(['prefix' => 'api'], function() {
 
 	Route::group(['prefix' => 'events'], function() {
 		Route::get('/', 'ApiEventsController@getAll');
+		Route::get('/{id}', 'ApiEventsController@getSingle');
+
+		Route::post('/', 'ApiEventsController@postIndex');
 	});
 });
