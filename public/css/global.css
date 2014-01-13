@@ -2,6 +2,10 @@ body {
 	font-family:arial;
 }
 
+select, label {
+	display:block;
+}
+
 tr:hover {
 	cursor:pointer;
 }

@@ -52,7 +52,19 @@ class HomeController extends BaseController {
 
 	public function trigger()
 	{
-		Pusherer::trigger('test-channel', 'test-event', array('message' => 'Hello world'));
+		$events = EventType::all();
+		$fixtures = Fixture::getAllOngoing();
+
+		foreach ($fixtures as $fixture) {
+			$fixture->load('homeTeam.teamDetails','awayTeam.teamDetails');
+		}
+
+		return $this->layout->content = View::make('trigger',[
+			'pusherKey' => Config::get('pusherer::key'),
+			'fixtures' => $fixtures,
+			'events' => $events
+		]);
+		// Pusherer::trigger('test-channel', 'test-event', array('message' => 'Hello world'));
 	}
 
 }
