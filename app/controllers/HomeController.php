@@ -23,13 +23,9 @@ class HomeController extends BaseController {
 
 		foreach($fixtures as $fixture)
 		{
-			foreach($fixture->teams as $team)
-			{
-				if ($team->homeTeam)
-					$fixture->teams->home = $team;
-				else
-					$fixture->teams->away = $team;
-			}
+			$fixture->load('homeTeam.teamDetails', 'awayTeam.teamDetails');
+			$fixture->load('events.eventType', 'events.player');
+			$fixture->load('stadium');
 
 			$goals = [];
 			foreach($fixture->events as $event)
@@ -44,10 +40,8 @@ class HomeController extends BaseController {
 				}
 			}
 
-			$fixture->teams->home->goals = isset($goals[$fixture->teams->home->teamID]) ? $goals[$fixture->teams->home->teamID] : 0;
-			$fixture->teams->away->goals = isset($goals[$fixture->teams->away->teamID]) ? $goals[$fixture->teams->away->teamID] : 0;
-
-			// Log::debug(print_r($fixture->stadium, true));
+			$fixture->homeTeam->goals = isset($goals[$fixture->homeTeam->teamID]) ? $goals[$fixture->homeTeam->teamID] : 0;
+			$fixture->awayTeam->goals = isset($goals[$fixture->awayTeam->teamID]) ? $goals[$fixture->awayTeam->teamID] : 0;
 		}
 
 		return $this->layout->content = View::make('client', [

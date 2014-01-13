@@ -27,6 +27,7 @@ class FixtureEvent extends Eloquent {
 	protected $fillable = [
 		'fixtureID',
 		'eventID',
+		'teamID',
 		'playerID',
 		'minute',
 	];
@@ -36,8 +37,57 @@ class FixtureEvent extends Eloquent {
 		return $this->hasOne('EventType', 'eventID', 'eventID');
 	}
 
+	public function goals()
+	{
+		return $this->hasOne('EventType', 'eventID', 'eventID')->where('eventID', '1');
+	}
+
 	public function player()
 	{
 		return $this->hasOne('Player', 'playerID');
 	}
+
+	public function fixture()
+	{
+		return $this->belongsTo('Fixture', 'fixtureID');
+	}
+
+	public static function getAllOngoing()
+	{
+		$events = self::all();
+
+		$events = $events->filter(function($event) {
+			return ($event->fixture->isOngoing == '1');
+		});
+
+		return $events->load('eventType');
+	}
+
+	public static function getSingleOngoing($id)
+	{
+		$event = self::find($id);
+
+		if ($event->fixture->isOngoing != '1')
+			return App::abort('404', 'Fixture not found');
+
+		return $event->load('eventType');
+	}
+
+	public static function createSingle()
+	{
+		$event = new self;
+
+		$fixture = Fixture::testIsOngoing(Input::get('fixtureID'));
+
+		$event->fixtureID = $fixture->fixtureID;
+		$event->eventID = Input::get('eventID');
+		$event->teamID = Input::get('teamID');
+		$event->playerID = Input::get('playerID');
+		$event->minute = Input::get('minute');
+
+		$event->save();
+
+		return $event;
+	}
+
 }
