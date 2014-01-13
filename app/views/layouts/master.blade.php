@@ -6,6 +6,8 @@
 
 	<link rel="stylesheet" type="text/css" href="/css/global.css">
 	<script type="text/javascript" src="http://js.pusher.com/2.1/pusher.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+	<script type="text/javascript" src="/js/global.js"></script>
 </head>
 <body>
 
