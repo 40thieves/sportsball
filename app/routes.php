@@ -24,4 +24,8 @@ Route::group(['prefix' => 'api'], function() {
 		Route::get('{id}/teams', 'ApiFixtureController@getTeams');
 		Route::get('{id}/stadium', 'ApiFixtureController@getStadium');
 	});
+
+	Route::group(['prefix' => 'events'], function() {
+		Route::get('/', 'ApiEventsController@getAll');
+	});
 });

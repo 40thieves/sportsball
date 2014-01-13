@@ -46,4 +46,20 @@ class FixtureEvent extends Eloquent {
 		return $this->hasOne('Player', 'playerID');
 	}
 
+	public function fixture()
+	{
+		return $this->belongsTo('Fixture', 'fixtureID');
+	}
+
+	public static function getAllOngoing()
+	{
+		$events = self::all();
+
+		$events = $events->filter(function($event) {
+			return ($event->fixture->isOngoing == '1');
+		});
+
+		return $events->load('eventType');
+	}
+
 }
