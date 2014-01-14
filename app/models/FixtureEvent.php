@@ -9,12 +9,6 @@ class FixtureEvent extends Eloquent {
 	protected $table = 'fixtureEvent';
 
 	/**
-	 * Primary key of the table
-	 * @var string
-	 */
-	protected $primaryKey = 'fixtureID';
-
-	/**
 	 * Turns off automatic timestamps
 	 * @var boolean
 	 */
@@ -87,14 +81,6 @@ class FixtureEvent extends Eloquent {
 
 		if ( ! $event->save())
 			App::abort('500', 'Save failed');
-
-		Pusherer::trigger('fixture_' . $fixture->fixtureID, 'event_' . $event->eventID, array(
-			'fixtureID' => $fixture->fixtureID,
-			'eventID' => $event->eventID,
-			'teamID' => $event->teamID,
-			'playerID' => $event->playerID,
-			'minute' => $event->minute,
-		));
 
 		return $event;
 	}

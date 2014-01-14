@@ -64,7 +64,7 @@ global.ticker = {
 	update : function(data) {
 		var ticker = $('#ticker');
 
-		var item = $('<p>')
+		var item = $('<p>');
 		item.append('<span>').addClass('event').html(data.event);
 		item.append('<span>').addClass('team').html(data.team);
 		item.append('<span>').addClass('player').html(data.player);
@@ -72,6 +72,13 @@ global.ticker = {
 
 		ticker.append(item);
 	}
+};
+
+global.goalIncrementer = function(data) {
+	var $goals = $('#team-goals-' + data.event.teamID)
+	,	newGoals = parseInt($goals.html(), 10) + 1
+	;
+	$goals.html(newGoals);
 };
 
 $(document).ready(global.triggerForm._init);

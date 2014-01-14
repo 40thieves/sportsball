@@ -23,18 +23,9 @@
 	<script>
 		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }});
 
-		var goalIncrementer = function(data) {
-			var $goals = $('#team-goals-' + data.teamID)
-			,	newGoals = parseInt($goals.html()) + 1
-			;
-
-			$goals.html(newGoals);
-		}
-
 		@foreach($fixtures as $fixture)
 			var	channel_{{$fixture->fixtureID}} = pusher.subscribe('fixture_{{$fixture->fixtureID}}');
-
-			channel_{{$fixture->fixtureID}}.bind('event_1', goalIncrementer);
+			channel_{{$fixture->fixtureID}}.bind('event_1', global.goalIncrementer);
 		@endforeach
 	</script>
 @stop

@@ -14,6 +14,8 @@ class ApiEventsController extends ApiController {
 
 	public static function postIndex()
 	{
+		FixtureEvent::observe(new FixtureEventObserver);
+
 		return FixtureEvent::createSingle();
 	}
 
