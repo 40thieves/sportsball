@@ -8,8 +8,8 @@
 			@foreach ($fixtures as $fixture)
 				<tr id="{{$fixture->fixtureID}}">
 					<td class="team home">{{$fixture->homeTeam->teamDetails->name}}</td>
-					<td class="goals homeGoals">{{$fixture->homeTeam->goals}}</td>
-					<td class="goals awayGoals">{{$fixture->awayTeam->goals}}</td>
+					<td class="goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</td>
+					<td class="goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</td>
 					<td class="team away">{{$fixture->awayTeam->teamDetails->name}}</td>
 				</tr>
 			@endforeach
@@ -23,15 +23,18 @@
 	<script>
 		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }});
 
-		var goalCallback = function(data) {
-			console.log('Goal recieved!');
-			console.log('Here\'s the data: ', data);
+		var goalIncrementer = function(data) {
+			var $goals = $('#team-goals-' + data.teamID)
+			,	newGoals = parseInt($goals.html()) + 1
+			;
+
+			$goals.html(newGoals);
 		}
 
 		@foreach($fixtures as $fixture)
 			var	channel_{{$fixture->fixtureID}} = pusher.subscribe('fixture_{{$fixture->fixtureID}}');
 
-			channel_{{$fixture->fixtureID}}.bind('event_1', goalCallback);
+			channel_{{$fixture->fixtureID}}.bind('event_1', goalIncrementer);
 		@endforeach
 	</script>
 @stop
