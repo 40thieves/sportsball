@@ -85,7 +85,8 @@ class FixtureEvent extends Eloquent {
 		$event->playerID = Input::get('playerID');
 		$event->minute = Input::get('minute');
 
-		$event->save();
+		if ( ! $event->save())
+			App::abort('500', 'Save failed');
 
 		return $event;
 	}
