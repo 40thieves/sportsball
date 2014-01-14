@@ -17,13 +17,18 @@
 	</table>
 
 	<script>
-		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }})
-		,	channel = pusher.subscribe('test-channel')
-		;
+		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }});
 
-		channel.bind('test-event', function(data) {
-			console.log('Notification recieved!');
+		var goalCallback = function(data) {
+			console.log('Goal recieved!');
 			console.log('Here\'s the data: ', data);
-		});
+		}
+
+		<?php foreach($fixtures as $fixture) : ?>
+			<?php $id = $fixture->fixtureID; ?>
+			var	channel_<?php echo $id; ?> = pusher.subscribe('fixture_<?php echo $id; ?>');
+
+			channel_<?php echo $id; ?>.bind('event_1', goalCallback);
+		<?php endforeach; ?>
 	</script>
 @stop
