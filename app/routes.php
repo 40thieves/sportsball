@@ -31,4 +31,11 @@ Route::group(['prefix' => 'api'], function() {
 
 		Route::post('/', 'ApiEventsController@postIndex');
 	});
+
+	Route::group(['prefix' => 'team'], function() {
+		Route::get('/','ApiTeamController@getAll');
+		Route::get('/{id}','ApiTeamController@getSingle');
+		Route::get('/{id}/players','ApiTeamController@getPlayers');
+
+	});
 });

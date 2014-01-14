@@ -35,4 +35,16 @@ class Team extends Eloquent {
 	protected $guarded = [
 		'teamID',
 	];
+
+	public function players()
+	{
+		return $this->hasMany('Player','teamID');
+	}
+
+	public static function getPlayers($id) 
+	{
+		return self::where('TeamID',$id)
+			->with('players')
+			->firstOrFail();
+	}
 }
