@@ -31,7 +31,7 @@ global.triggerForm = {
 
 						playerContainer.html('').append( $('<option>').html('SELECT') );
 						
-						response.players.each(function(){
+						$(response.players).each(function(){
 							playerContainer.append( $('<option>').attr('value',this.playerID).html(this.name) );
 						});
 					})
