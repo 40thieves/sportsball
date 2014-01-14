@@ -8,6 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddIsOngoingToFixtureTable' => $baseDir . '/app/database/migrations/2014_01_09_133205_add_isOngoing_to_fixture_table.php',
     'AddTeamidToFixtureeventTable' => $baseDir . '/app/database/migrations/2014_01_09_161758_add_teamid_to_fixtureevent_table.php',
+    'ApiController' => $baseDir . '/app/controllers/ApiController.php',
+    'ApiEventsController' => $baseDir . '/app/controllers/ApiEventsController.php',
+    'ApiFixtureController' => $baseDir . '/app/controllers/ApiFixtureController.php',
+    'ApiTeamController' => $baseDir . '/app/controllers/ApiTeamController.php',
     'Artdarek\\Pusherer\\Facades\\Pusherer' => $vendorDir . '/artdarek/pusherer/src/Artdarek/Pusherer/Facades/Pusherer.php',
     'Artdarek\\Pusherer\\PushererServiceProvider' => $vendorDir . '/artdarek/pusherer/src/Artdarek/Pusherer/PushererServiceProvider.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
@@ -926,6 +930,7 @@ return array(
     'Pusher' => $vendorDir . '/pusher/pusher-php-server/lib/Pusher.php',
     'PusherException' => $vendorDir . '/pusher/pusher-php-server/lib/Pusher.php',
     'PusherInstance' => $vendorDir . '/pusher/pusher-php-server/lib/Pusher.php',
+    'RenameTableEvents' => $baseDir . '/app/database/migrations/2014_01_14_092144_rename_table_events.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'Stack\\Builder' => $vendorDir . '/stack/builder/src/Stack/Builder.php',
     'Stack\\StackedHttpKernel' => $vendorDir . '/stack/builder/src/Stack/StackedHttpKernel.php',

@@ -47,7 +47,7 @@ global.triggerForm = {
 		});
 		$('form').bind('submit',function(evt){
 			evt.preventDefault();
-			$.post('/api/events/',$(this).serialize())
+			$.post('/api/events',$(this).serializeArray())
 			.done(function(response){
 				console.log('Event Post Succeeded with response',response);
 			})
