@@ -89,6 +89,8 @@ class FixtureEvent extends Eloquent {
 			App::abort('500', 'Save failed');
 
 		Pusherer::trigger('fixture_' . $fixture->fixtureID, 'event_' . $event->eventID, array(
+			'fixtureID' => $event->fixtureID,
+			'eventID' => $event->eventID,
 			'teamID' => $event->teamID,
 			'playerID' => $event->playerID,
 			'minute' => $event->minute,
