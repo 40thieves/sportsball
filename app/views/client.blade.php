@@ -25,7 +25,8 @@
 
 		@foreach($fixtures as $fixture)
 			var	channel_{{$fixture->fixtureID}} = pusher.subscribe('fixture_{{$fixture->fixtureID}}');
-			channel_{{$fixture->fixtureID}}.bind('event_1', global.goalIncrementer);
+			channel_{{$fixture->fixtureID}}.bind('event_goal', global.goalIncrementer);
+			channel_{{$fixture->fixtureID}}.bind('event_all', global.ticker.update);
 		@endforeach
 	</script>
 @stop

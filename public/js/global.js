@@ -60,9 +60,14 @@ global.triggerForm = {
 };
 
 global.ticker = {
-	//Not sure what's in data at this point so it may break
 	update : function(data) {
 		var ticker = $('#ticker');
+		var event = data.event;
+
+		// Event name - event.event_type.label
+		// Team name - event.team.name
+		// Player name - event.player.name
+		// Minute - event.minute
 
 		var item = $('<p>');
 		item.append('<span>').addClass('event').html(data.event);

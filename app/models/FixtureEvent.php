@@ -38,13 +38,19 @@ class FixtureEvent extends Eloquent {
 
 	public function player()
 	{
-		return $this->hasOne('Player', 'playerID');
+		return $this->hasOne('Player', 'playerID', 'playerID');
+	}
+
+	public function team()
+	{
+		return $this->hasOne('Team', 'teamID', 'teamID');
 	}
 
 	public function fixture()
 	{
 		return $this->belongsTo('Fixture', 'fixtureID');
 	}
+
 
 	public static function getAllOngoing()
 	{
