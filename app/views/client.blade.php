@@ -24,11 +24,10 @@
 			console.log('Here\'s the data: ', data);
 		}
 
-		<?php foreach($fixtures as $fixture) : ?>
-			<?php $id = $fixture->fixtureID; ?>
-			var	channel_<?php echo $id; ?> = pusher.subscribe('fixture_<?php echo $id; ?>');
+		@foreach($fixtures as $fixture)
+			var	channel_{{$fixture->fixtureID}} = pusher.subscribe('fixture_{{$fixture->fixtureID}}');
 
-			channel_<?php echo $id; ?>.bind('event_1', goalCallback);
-		<?php endforeach; ?>
+			channel_{{$fixture->fixtureID}}.bind('event_1', goalCallback);
+		@endforeach
 	</script>
 @stop
