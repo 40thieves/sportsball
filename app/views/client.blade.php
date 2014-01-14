@@ -16,6 +16,10 @@
 		</tbody>
 	</table>
 
+	<section id="ticker">
+		
+	</section>
+
 	<script>
 		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }});
 

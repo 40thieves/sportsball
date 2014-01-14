@@ -57,6 +57,21 @@ global.triggerForm = {
 		});
 		
 	}
-}
+};
+
+global.ticker = {
+	//Not sure what's in data at this point so it may break
+	update : function(data) {
+		var ticker = $('#ticker');
+
+		var item = $('<p>')
+		item.append('<span>').addClass('event').html(data.event);
+		item.append('<span>').addClass('team').html(data.team);
+		item.append('<span>').addClass('player').html(data.player);
+		item.append('<span>').addClass('minute').html(data.minute);
+
+		ticker.append(item);
+	}
+};
 
 $(document).ready(global.triggerForm._init);
