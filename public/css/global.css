@@ -29,3 +29,25 @@ td.team {
 td.team.home {
 	text-align:right;
 }
+
+section#ticker {
+	width:460px;
+}
+
+section#ticker p {
+	width:100%;
+	overflow:hidden;
+}
+
+section#ticker span {
+	width:25%;
+	display:block;
+	float:left;
+}
+
+section#ticker span.event {
+	font-weight:bold;
+}
+section#ticker span.player {
+	width:50%;
+}

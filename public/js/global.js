@@ -70,12 +70,10 @@ global.ticker = {
 		// Minute - event.minute
 
 		var item = $('<p>');
-		item.append('<span>').addClass('event').html(data.event);
-		item.append('<span>').addClass('team').html(data.team);
-		item.append('<span>').addClass('player').html(data.player);
-		item.append('<span>').addClass('minute').html(data.minute);
-
-		ticker.append(item);
+		ticker.prepend(item);
+		item.append($('<span>').addClass('event').html(event.event_type.label));
+		item.append($('<span>').addClass('team').html(event.team.name));
+		item.append($('<span>').addClass('player').html(event.player.name + ' ' + event.minute));
 	}
 };
 
