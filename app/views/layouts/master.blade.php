@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Laravel PHP Framework</title>
+	<title>Real-Time Sports Statistics</title>
 
 	<link rel="stylesheet" type="text/css" href="/css/global.css">
 	<script type="text/javascript" src="http://js.pusher.com/2.1/pusher.min.js"></script>
