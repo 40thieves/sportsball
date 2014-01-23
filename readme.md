@@ -46,18 +46,16 @@ Currently, there are two events that are sent over channels:
 
 ##### Quick and dirty RESTful API docs
 
-* /api
-	* /fixture - list of ongoing fixtures
-	* /fixture/:id - teams, score, stadium, events
-		* /score - calculated score
-		* /teams - teams playing
-		* /events - list of events
-		* /stadium - stadium
-	* /events - list of all events from ongoing fixtures
-		* /events/:id - single event
-	* /team - list of teams
-	* /team/:id - team info, players
-		* /players - team players
-	* /player - list of players
-	* /player/:id - player info
+* `/api`
+	* `/fixture` - list of ongoing fixtures
+	* `/fixture/:id` - teams, score, stadium, events
+		* `/score` - calculated score
+		* `/teams` - teams playing
+		* `/events` - list of events
+		* `/stadium` - stadium
+	* `/events` - list of all events from ongoing fixtures
+		* `/events/:id` - single event
+	* `/team` - list of teams
+	* `/team/:id` - team info, players
+		* `/players` - team players
 
