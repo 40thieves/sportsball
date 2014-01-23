@@ -13,7 +13,7 @@ API for delivering sports statistics and updates over websockets, built on Larav
 
 #### Database Seeding
 
-Import the create.sql file into your database.
+Import the `create.sql` file into your database.
 
 If you have `composer` run `php artisan migrate`. Otherwise, follow these steps:
 
