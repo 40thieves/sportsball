@@ -7,13 +7,6 @@ use Illuminate\Database\Schema\Blueprint;
 class MySqlGrammar extends Grammar {
 
 	/**
-	 * The keyword identifier wrapper format.
-	 *
-	 * @var string
-	 */
-	protected $wrapper = '`%s`';
-
-	/**
 	 * The possible column modifiers.
 	 *
 	 * @var array
@@ -274,6 +267,17 @@ class MySqlGrammar extends Grammar {
 		$from = $this->wrapTable($blueprint);
 
 		return "rename table {$from} to ".$this->wrapTable($command->to);
+	}
+
+	/**
+	 * Create the column definition for a char type.
+	 *
+	 * @param  \Illuminate\Support\Fluent  $column
+	 * @return string
+	 */
+	protected function typeChar(Fluent $column)
+	{
+		return "char({$column->length})";
 	}
 
 	/**
@@ -561,6 +565,19 @@ class MySqlGrammar extends Grammar {
 		{
 			return ' after '.$this->wrap($column->after);
 		}
+	}
+
+	/**
+	 * Wrap a single string in keyword identifiers.
+	 *
+	 * @param  string  $value
+	 * @return string
+	 */
+	protected function wrapValue($value)
+	{
+		if ($value === '*') return $value;
+
+		return '`'.str_replace('`', '``', $value).'`';
 	}
 
 }

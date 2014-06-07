@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"require": {
 		"artdarek/pusherer": "dev-master",
+		"thujohn/twitter" : "dev-master",
 		"laravel/framework": "4.1.*"
 	},
 	"autoload": {
