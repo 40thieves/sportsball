@@ -178,4 +178,11 @@ return array(
 
 	),
 
+	'thesaurus' => [
+		'goal' => [
+			'goal',
+			'score'
+		]
+	],
+
 );

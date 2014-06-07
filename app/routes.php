@@ -15,6 +15,12 @@ Route::get('/', 'HomeController@showClient');
 
 Route::get('trigger', 'HomeController@trigger');
 
+Route::group(['prefix' => 'twitter'],function(){
+	Route::group(['prefix' => 'fixture'],function(){
+		Route::get('/{id}','TwitterFixtureController@getSingle');			
+	});	
+});
+
 Route::group(['prefix' => 'api'], function() {
 
 	Route::group(['prefix' => 'fixture'], function() {
