@@ -12,6 +12,7 @@ CREATE TABLE fixture
 (
 fixtureID integer(8) primary key AUTO_INCREMENT,
 stadiumID integer(8) NOT NULL,
+isOngoing boolean,
 FOREIGN KEY (stadiumID) REFERENCES stadium(stadiumID)
 );
 
@@ -32,7 +33,7 @@ UNIQUE (name),
 FOREIGN KEY (teamID) REFERENCES team(teamID)
 );
 
-CREATE TABLE event
+CREATE TABLE eventType
 (
 eventID integer(8) primary key AUTO_INCREMENT,
 label varchar(30) NOT NULL,
@@ -53,13 +54,15 @@ CREATE TABLE fixtureEvent
 fixtureID integer(8),
 eventID integer(8),
 playerID integer(8),
+teamID integer(8),
 minute integer(2),
 FOREIGN KEY (fixtureID) REFERENCES fixture(fixtureID),
-FOREIGN KEY (eventID) REFERENCES event(eventID),
-FOREIGN KEY (playerID) REFERENCES player(playerID)
+FOREIGN KEY (eventID) REFERENCES eventType(eventID),
+FOREIGN KEY (playerID) REFERENCES player(playerID),
+FOREIGN KEY (teamID) REFERENCES team(teamID)
 );
 
-INSERT INTO event (label)
+INSERT INTO eventType (label)
 VALUES 
 ('Goal'),
 ('Yellow Card'),
@@ -475,7 +478,7 @@ VALUES
 (10,8,0);
 
 SELECT e.label as 'Event', t.name as 'Team', p.name as 'Player', fe.minute
-FROM event e, fixture f, player p, team t, fixtureEvent fe
+FROM eventType e, fixture f, player p, team t, fixtureEvent fe
 WHERE fe.eventID = e.eventID
 AND fe.fixtureID = f.fixtureID 
 AND fe.playerID = p.playerID
