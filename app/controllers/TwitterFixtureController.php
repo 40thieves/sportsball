@@ -10,7 +10,7 @@ class TwitterFixtureController extends Controller {
 			$hashTag = $fixture->hashTag;
 		}
 		else {
-			$hashTag = "ENGvECU";
+			$hashTag = "ENGvHON";
 		}
 
 		$latestTweets = Twitter::getSearch([
@@ -26,18 +26,39 @@ class TwitterFixtureController extends Controller {
 
 	public static function detectEvents($tweets) {
 		$thesaurus = Config::get('app.thesaurus');
-		var_dump($thesaurus);
-		
+				
+		self::detectScore("It's 1-0");
+
+		//Loop through each status
 		foreach ($tweets->statuses as $t) {
-			echo $t->text . '<br/>';
+			
+			//Look for goal or synonyms
 			foreach ($thesaurus['goal'] as $keyword) {
 				if (strstr($t->text, $keyword)) {
+					echo $t->text . '<br/>';
 					echo $keyword;
-				}
-				else {
-					echo 'SAVED!!!';
-				}
+		
+					self::detectScore($t->text);
+
+					//Break the loop - we have our mention of a goal
+					break;
+				}				
 			}											
 		}
+	}
+
+	public static function detectScore($tweet) {
+		$currentScore = null;
+		//Try and find something which resembles a score
+		//??Should this only be applied to tweets which mention events
+		if ( $scoreMentioned = preg_match_all("/\d\-\d/", $tweet) ) {
+			echo "Score mentioned";
+
+			//We may be onto something
+			if ($scoreMentioned != $currentScore) {
+
+			}
+		}
+
 	}
 }
