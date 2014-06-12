@@ -73,17 +73,28 @@ class FixtureEvent extends Eloquent {
 		return $event->load('eventType');
 	}
 
-	public static function createSingle()
+	public static function createSingle($twitterEvent,$fixture)
 	{
 		$event = new self;
 
-		$fixture = Fixture::testIsOngoing(Input::get('fixtureID'));
+		//TODO: Streamline the API's
+		if ($twitterEvent) {
+			$event->fixtureID = $fixture->fixtureID;
+			$event->eventID = $twitterEvent['eventID'];
+			$event->teamID = $twitterEvent['teamID'];
+			$event->minute = $twitterEvent['minute'];			
+		}
+		else {
+			$fixture = Fixture::testIsOngoing(Input::get('fixtureID'));
 
-		$event->fixtureID = $fixture->fixtureID;
-		$event->eventID = Input::get('eventID');
-		$event->teamID = Input::get('teamID');
-		$event->playerID = Input::get('playerID');
-		$event->minute = Input::get('minute');
+			$event->fixtureID = $fixture->fixtureID;
+			$event->eventID = Input::get('eventID');
+			$event->teamID = Input::get('teamID');
+			$event->playerID = Input::get('playerID');
+			$event->minute = Input::get('minute');
+			
+		}
+
 
 		if ( ! $event->save())
 			App::abort('500', 'Save failed');
