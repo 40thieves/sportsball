@@ -37,8 +37,6 @@ class TwitterFixtureController extends Controller {
 
 		$count = sizeof($tweets->statuses);
 
-
-
 		//Loop through each status
 		foreach ($tweets->statuses as $t) {
 			
@@ -67,12 +65,12 @@ class TwitterFixtureController extends Controller {
 			}											
 		}
 
-		if ($goalProbability > 0.5) {
+		if ( $goalProbability > 0.5 ) {
 			return [
 				'eventID' => 1,
 				'teamID' => $homeTeamProbability > $awayTeamProbability ? $homeTeamProbability : $awayTeamProbability,
 				'minute' => 10
-			]
+			];
 		}
 		
 	}
@@ -95,7 +93,7 @@ class TwitterFixtureController extends Controller {
 
 	public static function detectTeam($tweet,$home,$away) {
 		$homeMentioned = strstr($tweet, $home);
-		$awayMentioned = strstr($twe, $away);
+		$awayMentioned = strstr($tweet, $away);
 
 		if ($homeMentioned || $awayMentioned) {
 			if ($homeMentioned && $awayMentioned) {
