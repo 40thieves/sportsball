@@ -10,7 +10,7 @@ class TwitterFixtureController extends Controller {
 			$hashTag = $fixture->hashTag;
 		}
 		else {
-			$hashTag = "ENGvHON";
+			$hashTag = "BELvALG";
 		}
 
 		$latestTweets = Twitter::getSearch([

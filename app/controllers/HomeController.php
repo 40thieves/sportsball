@@ -67,4 +67,12 @@ class HomeController extends BaseController {
 		// Pusherer::trigger('test-channel', 'test-event', array('message' => 'Hello world'));
 	}
 
+	public function twitter()
+	{
+		return $this->layout->content = View::make('twitter',[
+			'pusherKey' => Config::get('pusherer::key'),
+			'fixtureId' => 11			
+		]);
+	}
+
 }
