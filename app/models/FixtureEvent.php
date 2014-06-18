@@ -82,7 +82,9 @@ class FixtureEvent extends Eloquent {
 			$event->fixtureID = $fixture->fixtureID;
 			$event->eventID = $twitterEvent['eventID'];
 			$event->teamID = $twitterEvent['teamID'];
-			$event->minute = $twitterEvent['minute'];			
+			$event->minute = $twitterEvent['minute'];
+			//FIXME: Needs to be non dependant for event
+			$event->playerID = 1;
 		}
 		else {
 			$fixture = Fixture::testIsOngoing(Input::get('fixtureID'));
@@ -94,7 +96,6 @@ class FixtureEvent extends Eloquent {
 			$event->minute = Input::get('minute');
 			
 		}
-
 
 		if ( ! $event->save())
 			App::abort('500', 'Save failed');

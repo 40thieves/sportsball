@@ -182,6 +182,14 @@ return array(
 		'goal' => [
 			'goal',
 			'score'
+		],
+		'superlatives' => [
+			'great',
+			'brilliant',
+			'amazing',
+			'incredible',
+			'super',
+			'unbelievable',			
 		]
 	],
 

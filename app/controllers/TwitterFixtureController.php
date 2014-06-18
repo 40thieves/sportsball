@@ -10,7 +10,7 @@ class TwitterFixtureController extends Controller {
 			$hashTag = $fixture->hashTag;
 		}
 		else {
-			$hashTag = "BELvALG";
+			$hashTag = "AUSvsNED";
 		}
 
 		$latestTweets = Twitter::getSearch([
@@ -20,9 +20,9 @@ class TwitterFixtureController extends Controller {
 		]);
 
 		if ($latestTweets) {
-			if ( $event = self::detectEvents($latestTweets,$fixture) ) {
+			if ( $event = self::detectEvents($latestTweets,$fixture) ) {				
 				FixtureEvent::observe(new FixtureEventObserver);
-				FixtureEvent::createSingle($event);
+				FixtureEvent::createSingle($event,$fixture);
 			}
 		}
 	}
@@ -35,20 +35,22 @@ class TwitterFixtureController extends Controller {
 		$homeTeamProbability = 0;
 		$awayTeamProbability = 0;
 
+		//Need a flag to display info in response
+		$tweetsCounted = 0;
+
 		$count = sizeof($tweets->statuses);
 
 		//Loop through each status
 		foreach ($tweets->statuses as $t) {
+
 			
 			//Look for goal or synonyms
 			foreach ($thesaurus['goal'] as $keyword) {
-				if (strstr($t->text, $keyword)) {
-					echo $t->text . '<br/>';
-					echo $keyword;
+				if (strstr($t->text, $keyword)) {					
 
-					$goalProbability += 1 / $count;
-		
-					self::detectScore($t->text);
+					$tweetsCounted++;
+
+					$goalProbability += 1 / $count;		
 
 					$team = self::detectTeam($t->text,$fixture->homeTeam->name,$fixture->awayTeamName);
 
@@ -61,33 +63,72 @@ class TwitterFixtureController extends Controller {
 
 					//Break the loop - we have our mention of a goal
 					break;
-				}				
+				}								
+			}
+
+			//Checking all tweets for all of these
+			//Should we set a breakout flag??
+			foreach ($thesaurus['superlatives'] as $keyword) {
+				if (strstr($t->text, $keyword)) {
+
+					$tweetsCounted++;
+					
+					$goalProbability += 0.5 / $count;
+
+					$team = self::detectTeam($t->text,$fixture->homeTeam->name,$fixture->awayTeamName);
+
+					//Reduced probabilities here??
+					//Is a superlative less likely to be about a particular team??
+					if ($team == 'home') {
+						$homeTeamProbability += 0.5 / $count;
+					}
+					elseif ($team == 'away') {
+						$awayTeamProbability += 0.5 / $count;
+					}
+
+					//Break the loop - we have our mention of a superlative
+					break;
+				}
 			}											
+			
+			//Need to expand for feasibility - perhaps check if we 
+			if ( self::detectScore($t->text) ) {
+				
+				$tweetsCounted++;
+
+				$goalProbability += 0.5 / $count;
+			}
 		}
 
-		if ( $goalProbability > 0.5 ) {
+		$likelyScorer = $homeTeamProbability > $awayTeamProbability ? $fixture->homeTeam->teamID : $fixture->homeTeam->teamID;
+		
+		//Output something
+		echo "Tweets Counted: " . $tweetsCounted . "\n";
+		echo "Probability: " . $goalProbability . "\n";
+		echo "Likely Scorer: " . $likelyScorer . "\n";
+
+		//FIXME: Dropping to 30% may need to tweak in future		
+		if ( $goalProbability > 0.3 ) {
 			return [
 				'eventID' => 1,
-				'teamID' => $homeTeamProbability > $awayTeamProbability ? $homeTeamProbability : $awayTeamProbability,
-				'minute' => 10
+				'teamID' => $likelyScorer,
+				'minute' => date('m/d/Y h:i:s a', time())
 			];
 		}
 		
 	}
 
 	public static function detectScore($tweet) {
+		
 		$currentScore = null;
-		//Try and find something which resembles a score
-		//??Should this only be applied to tweets which mention events
+		//Try and find something which resembles a score		
 		if ( $scoreMentioned = preg_match_all("/\d\-\d/", $tweet) ) {
-			echo "Score mentioned";
-
-			//We may be onto something
-			//Another day though
-			// if ($scoreMentioned != $currentScore) {
-
-			// }
+			//This needs work
+			//We need to also establish if its the score we are expecting
+			//True or false doesn't really cut it
+			return true;
 		}
+		return false;
 
 	}
 

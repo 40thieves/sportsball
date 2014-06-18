@@ -73,7 +73,7 @@ global.ticker = {
 		ticker.prepend(item);
 		item.append($('<span>').addClass('event').html(event.event_type.label));
 		item.append($('<span>').addClass('team').html(event.team.name));
-		// item.append($('<span>').addClass('player').html(event.player.name + ' ' + event.minute));
+		item.append($('<span>').addClass('player').html(event.minute));
 	}
 };
 
