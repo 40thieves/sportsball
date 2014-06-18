@@ -107,8 +107,8 @@ class TwitterFixtureController extends Controller {
 		echo "Probability: " . $goalProbability . "\n";
 		echo "Likely Scorer: " . $likelyScorer . "\n";
 
-		//FIXME: Dropping to 30% may need to tweak in future		
-		if ( $goalProbability > 0.3 ) {
+		//FIXME: Dropping to 40% may need to tweak in future		
+		if ( $goalProbability > 0.4 ) {
 			return [
 				'eventID' => 1,
 				'teamID' => $likelyScorer,
