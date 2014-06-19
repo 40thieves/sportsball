@@ -71,7 +71,7 @@ class HomeController extends BaseController {
 	{
 		return $this->layout->content = View::make('twitter',[
 			'pusherKey' => Config::get('pusherer::key'),
-			'fixtureId' => 12			
+			'fixtureId' => 13			
 		]);
 	}
 

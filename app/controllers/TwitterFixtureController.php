@@ -6,11 +6,35 @@ class TwitterFixtureController extends Controller {
 	{
 		$fixture = Fixture::getSingleOngoing($id);
 
+		//Setup current goals
+		$goals = [];
+		foreach($fixture->events as $event)
+		{
+			//TODO: Only check for events if last event reported at least x seconds ago
+			//People keep tweeting about things causing duplicate events
+			// echo date_diff($event->minute,date('m/d/Y h:i:s a', time()));
+			// if (date_diff($event->minute,date('m/d/Y h:i:s a', time()))) {
+			// 	return false;
+			// }
+
+			// Goals
+			if ($event->eventID == 1)
+			{
+				if ( ! isset($goals[$event->teamID]))
+					$goals[$event->teamID] = 1;
+				else
+					$goals[$event->teamID]++;
+			}
+		}
+
+		$fixture->homeTeam->goals = isset($goals[$fixture->homeTeam->teamID]) ? $goals[$fixture->homeTeam->teamID] : 0;
+		$fixture->awayTeam->goals = isset($goals[$fixture->awayTeam->teamID]) ? $goals[$fixture->awayTeam->teamID] : 0;
+
 		if ($fixture->hashTag) {
 			$hashTag = $fixture->hashTag;
 		}
 		else {
-			$hashTag = "AUSvsNED";
+			$hashTag = "COLvsCIV";
 		}
 
 		$latestTweets = Twitter::getSearch([
@@ -92,15 +116,22 @@ class TwitterFixtureController extends Controller {
 			}											
 			
 			//Need to expand for feasibility - perhaps check if we 
-			if ( self::detectScore($t->text) ) {
+			if ( $team = self::detectScore($t->text,$fixture) ) {
 				
 				$tweetsCounted++;
 
-				$goalProbability += 0.5 / $count;
+				if ($team == 'home') {
+					$homeTeamProbability += 1 / $count;
+				}
+				elseif ($team == 'away') {
+					$awayTeamProbability += 1 / $count;
+				}
+
+				$goalProbability += 1 / $count;
 			}
 		}
 
-		$likelyScorer = $homeTeamProbability > $awayTeamProbability ? $fixture->homeTeam->teamID : $fixture->homeTeam->teamID;
+		$likelyScorer = $homeTeamProbability > $awayTeamProbability ? $fixture->homeTeam->teamID : $fixture->awayTeam->teamID;
 		
 		//Output something
 		echo "Tweets Counted: " . $tweetsCounted . "\n";
@@ -118,15 +149,26 @@ class TwitterFixtureController extends Controller {
 		
 	}
 
-	public static function detectScore($tweet) {
+	public static function detectScore($tweet,$fixture) {
 		
-		$currentScore = null;
+		$currentScore = null;		
+
 		//Try and find something which resembles a score		
-		if ( $scoreMentioned = preg_match_all("/\d\-\d/", $tweet) ) {
-			//This needs work
-			//We need to also establish if its the score we are expecting
-			//True or false doesn't really cut it
-			return true;
+		if ( $scoreMentioned = preg_match_all("/(?<homeGoals>\d)\-(?<awayGoals>\d)/", $tweet,$matches) ) {
+			
+			//If people are tweeting about an increased score then there is probably an event to report
+			if ( ( $matches['homeGoals'][0] + $matches['awayGoals'][0] ) - ( $fixture->homeTeam->goals + $fixture->awayTeam->goals ) >= 1 ) {
+				
+				//Home or away incremented by 1, lets report it
+				//FIXME: Need to expand to recover missed evemts
+				if ( $matches['homeGoals'][0] - $fixture->homeTeam->goals === 1 ) {
+					return 'home';
+				}
+				elseif ( $matches['awayGoals'][0] - $fixture->awayTeam->goals === 1 ) {
+					return 'away';
+				}
+			}
+
 		}
 		return false;
 
