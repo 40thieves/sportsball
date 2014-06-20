@@ -181,7 +181,14 @@ return array(
 	'thesaurus' => [
 		'goal' => [
 			'goal',
-			'score'
+			'score',
+			'finish',
+			'slotted'
+		],
+		'conceded' => [
+			'concede',
+			'let in',
+			'own goal'
 		],
 		'superlatives' => [
 			'great',
@@ -189,7 +196,20 @@ return array(
 			'amazing',
 			'incredible',
 			'super',
-			'unbelievable',			
+			'unbelievable',
+			'sublime',
+			'excellent',
+			'exceptional'
+		],
+		'expletives' => [
+			'sake',
+			'fuck',
+			'awful',
+			'terrible',
+			'useless',
+			'rubbish',
+			'crap',
+			'shit'
 		]
 	],
 

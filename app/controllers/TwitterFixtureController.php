@@ -2,53 +2,56 @@
 
 class TwitterFixtureController extends Controller {
 
-	public static function getSingle($id)
-	{
-		$fixture = Fixture::getSingleOngoing($id);
+	public static function getAll()
+	{		
+		$fixtures = Fixture::getAllOngoing();
 
-		//Setup current goals
-		$goals = [];
-		foreach($fixture->events as $event)
-		{
-			//TODO: Only check for events if last event reported at least x seconds ago
-			//People keep tweeting about things causing duplicate events
-			// echo date_diff($event->minute,date('m/d/Y h:i:s a', time()));
-			// if (date_diff($event->minute,date('m/d/Y h:i:s a', time()))) {
-			// 	return false;
-			// }
-
-			// Goals
-			if ($event->eventID == 1)
+		foreach ($fixtures as $fixture) {
+			//Setup current goals
+			$goals = [];
+			foreach($fixture->events as $event)
 			{
-				if ( ! isset($goals[$event->teamID]))
-					$goals[$event->teamID] = 1;
-				else
-					$goals[$event->teamID]++;
+				//TODO: Only check for events if last event reported at least x seconds ago
+				//People keep tweeting about things causing duplicate events
+				// echo date_diff($event->minute,date('m/d/Y h:i:s a', time()));
+				// if (date_diff($event->minute,date('m/d/Y h:i:s a', time()))) {
+				// 	return false;
+				// }
+
+				// Goals
+				if ($event->eventID == 1)
+				{
+					if ( ! isset($goals[$event->teamID]))
+						$goals[$event->teamID] = 1;
+					else
+						$goals[$event->teamID]++;
+				}
 			}
-		}
 
-		$fixture->homeTeam->goals = isset($goals[$fixture->homeTeam->teamID]) ? $goals[$fixture->homeTeam->teamID] : 0;
-		$fixture->awayTeam->goals = isset($goals[$fixture->awayTeam->teamID]) ? $goals[$fixture->awayTeam->teamID] : 0;
+			$fixture->homeTeam->goals = isset($goals[$fixture->homeTeam->teamID]) ? $goals[$fixture->homeTeam->teamID] : 0;
+			$fixture->awayTeam->goals = isset($goals[$fixture->awayTeam->teamID]) ? $goals[$fixture->awayTeam->teamID] : 0;
 
-		if ($fixture->hashTag) {
-			$hashTag = $fixture->hashTag;
-		}
-		else {
-			$hashTag = "COLvsCIV";
-		}
-
-		$latestTweets = Twitter::getSearch([
-			'q' => $hashTag,
-			'count' => 20,
-			'include_entities' => 0			
-		]);
-
-		if ($latestTweets) {
-			if ( $event = self::detectEvents($latestTweets,$fixture) ) {				
-				FixtureEvent::observe(new FixtureEventObserver);
-				FixtureEvent::createSingle($event,$fixture);
+			if ($fixture->hashTag) {
+				$hashTag = $fixture->hashTag;
 			}
+			else {
+				$hashTag = "#COLvsCIV";
+			}
+
+			$latestTweets = Twitter::getSearch([
+				'q' => $hashTag,
+				'count' => 20,
+				'include_entities' => 0			
+			]);
+
+			if ($latestTweets) {
+				if ( $event = self::detectEvents($latestTweets,$fixture) ) {				
+					FixtureEvent::observe(new FixtureEventObserver);
+					FixtureEvent::createSingle($event,$fixture);
+				}
+			}			
 		}
+
 	}
 
 	public static function detectEvents($tweets,$fixture) {
@@ -90,6 +93,28 @@ class TwitterFixtureController extends Controller {
 				}								
 			}
 
+			//Look for goal or synonyms
+			foreach ($thesaurus['conceded'] as $keyword) {
+				if (strstr($t->text, $keyword)) {					
+
+					$tweetsCounted++;
+
+					$goalProbability += 1 / $count;		
+
+					$team = self::detectTeam($t->text,$fixture->homeTeam->name,$fixture->awayTeamName);
+
+					if ($team == 'home') {
+						$awayTeamProbability += 1 / $count;
+					}
+					elseif ($team == 'away') {
+						$homeTeamProbability += 1 / $count;
+					}
+
+					//Break the loop - we have our mention of a goal
+					break;
+				}								
+			}
+
 			//Checking all tweets for all of these
 			//Should we set a breakout flag??
 			foreach ($thesaurus['superlatives'] as $keyword) {
@@ -113,7 +138,32 @@ class TwitterFixtureController extends Controller {
 					//Break the loop - we have our mention of a superlative
 					break;
 				}
-			}											
+			}
+
+			//Checking all tweets for all of these
+			//Should we set a breakout flag??
+			foreach ($thesaurus['expletives'] as $keyword) {
+				if (strstr($t->text, $keyword)) {
+
+					$tweetsCounted++;
+					
+					$goalProbability += 0.5 / $count;
+
+					$team = self::detectTeam($t->text,$fixture->homeTeam->name,$fixture->awayTeamName);
+
+					//Reduced probabilities here??
+					//Is an expletive less likely to be about a particular team??
+					if ($team == 'home') {
+						$awayTeamProbability += 0.5 / $count;
+					}
+					elseif ($team == 'away') {
+						$homeTeamProbability += 0.5 / $count;
+					}
+
+					//Break the loop - we have our mention of a superlative
+					break;
+				}
+			}													
 			
 			//Need to expand for feasibility - perhaps check if we 
 			if ( $team = self::detectScore($t->text,$fixture) ) {

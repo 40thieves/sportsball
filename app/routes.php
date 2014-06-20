@@ -20,11 +20,7 @@ Route::get('twitter','HomeController@twitter');
 
 Route::group(['prefix' => 'api'], function() {
 
-	Route::group(['prefix' => 'twitter'],function(){
-		Route::group(['prefix' => 'fixture'],function(){
-			Route::get('/{id}','TwitterFixtureController@getSingle');			
-		});	
-	});
+	Route::get('twitter','TwitterFixtureController@getAll');
 
 	Route::group(['prefix' => 'fixture'], function() {
 		Route::get('/', 'ApiFixtureController@getAll');
