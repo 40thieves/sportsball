@@ -3,7 +3,7 @@
 @section('content')
 	<script type="text/javascript">
 		setInterval(function(){ 
-			$.get('/api/twitter/fixture/{{$fixtureId}}')
+			$.get('/api/twitter')
 			.done(function(response){
 				console.log(response);
 			})

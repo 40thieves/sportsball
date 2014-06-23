@@ -69,9 +69,6 @@ class HomeController extends BaseController {
 
 	public function twitter()
 	{
-		$tweet = "1-0";
-		echo preg_match_all("/(?<homeGoals>\d)\-(?<awayGoals>\d)/", $tweet,$matches);
-
 		return $this->layout->content = View::make('twitter');
 	}
 

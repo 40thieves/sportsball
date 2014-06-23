@@ -35,7 +35,7 @@ class TwitterFixtureController extends Controller {
 				$hashTag = $fixture->hashTag;
 			}
 			else {
-				$hashTag = "#COLvsCIV";
+				$hashTag = "#ITAvsCRC";
 			}
 
 			$latestTweets = Twitter::getSearch([
@@ -43,6 +43,17 @@ class TwitterFixtureController extends Controller {
 				'count' => 20,
 				'include_entities' => 0			
 			]);
+			
+			//Lets store the data
+			$tweets = [];
+
+			foreach ($latestTweets->statuses as $tweet) {
+				array_push($tweets,$tweet->text);
+			}
+			$tweets = implode("###",$tweets);
+
+			$twitterresponse = TwitterResponse::createSingle($tweets,$fixture->fixtureID);
+			echo $twitterresponse;
 
 			if ($latestTweets) {
 				if ( $event = self::detectEvents($latestTweets,$fixture) ) {				
@@ -64,6 +75,11 @@ class TwitterFixtureController extends Controller {
 
 		//Need a flag to display info in response
 		$tweetsCounted = 0;
+		$goalCount = 0;
+		$concedeCount = 0;
+		$superCount = 0;
+		$scoreCounted = 0;
+		$explCount = 0;
 
 		$count = sizeof($tweets->statuses);
 
@@ -76,6 +92,7 @@ class TwitterFixtureController extends Controller {
 				if (strstr($t->text, $keyword)) {					
 
 					$tweetsCounted++;
+					$goalCount++;
 
 					$goalProbability += 1 / $count;		
 
@@ -98,6 +115,7 @@ class TwitterFixtureController extends Controller {
 				if (strstr($t->text, $keyword)) {					
 
 					$tweetsCounted++;
+					$concedeCount++;
 
 					$goalProbability += 1 / $count;		
 
@@ -121,6 +139,7 @@ class TwitterFixtureController extends Controller {
 				if (strstr($t->text, $keyword)) {
 
 					$tweetsCounted++;
+					$superCount++;
 					
 					$goalProbability += 0.5 / $count;
 
@@ -146,6 +165,7 @@ class TwitterFixtureController extends Controller {
 				if (strstr($t->text, $keyword)) {
 
 					$tweetsCounted++;
+					$explCount++;
 					
 					$goalProbability += 0.5 / $count;
 
@@ -169,6 +189,7 @@ class TwitterFixtureController extends Controller {
 			if ( $team = self::detectScore($t->text,$fixture) ) {
 				
 				$tweetsCounted++;
+				$scoreCounted++;
 
 				if ($team == 'home') {
 					$homeTeamProbability += 1 / $count;
@@ -185,6 +206,11 @@ class TwitterFixtureController extends Controller {
 		
 		//Output something
 		echo "Tweets Counted: " . $tweetsCounted . "\n";
+		echo "Tweets Counted (Goals): " . $goalCount . "\n";
+		echo "Tweets Counted (Conceded): " . $concedeCount . "\n";
+		echo "Tweets Counted (Superlatives): " . $superCount . "\n";
+		echo "Tweets Counted (Expletives): " . $explCount . "\n";
+		echo "Tweets Counted (Score): " . $scoreCounted . "\n";
 		echo "Probability: " . $goalProbability . "\n";
 		echo "Likely Scorer: " . $likelyScorer . "\n";
 

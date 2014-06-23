@@ -21,6 +21,7 @@ Route::get('twitter','HomeController@twitter');
 Route::group(['prefix' => 'api'], function() {
 
 	Route::get('twitter','TwitterFixtureController@getAll');
+	Route::get('mining','TwitterDataMiningController@getAll');
 
 	Route::group(['prefix' => 'fixture'], function() {
 		Route::get('/', 'ApiFixtureController@getAll');
