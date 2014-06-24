@@ -53,7 +53,6 @@ class TwitterFixtureController extends Controller {
 			$tweets = implode("###",$tweets);
 
 			$twitterresponse = TwitterResponse::createSingle($tweets,$fixture->fixtureID);
-			echo $twitterresponse;
 
 			if ($latestTweets) {
 				if ( $event = self::detectEvents($latestTweets,$fixture) ) {				
