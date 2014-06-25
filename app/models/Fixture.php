@@ -25,7 +25,7 @@ class Fixture extends Eloquent {
 	 * @var array
 	 */
 	protected $fillable = [
-		'stadiumID',
+		'stadiumID','isOngoing',
 	];
 
 	/**
@@ -34,15 +34,7 @@ class Fixture extends Eloquent {
 	 */
 	protected $guarded = [
 		'fixtureID',
-	];
-
-	/**
-	 * Model attributes that are hidden from JSON conversion
-	 * @var array
-	 */
-	protected $hidden = [
-		'isOngoing',
-	];
+	];	
 
 	public function events()
 	{
@@ -134,6 +126,36 @@ class Fixture extends Eloquent {
 		}
 		catch (ModelNotFoundException $e) {
 			App::abort('404', 'Fixture not found');
+		}
+
+		return $fixture;
+	}
+
+	public static function startMatch($id)
+	{
+		$fixture = self::where('fixtureID', $id)
+			->firstOrFail();
+
+		$fixture->isOngoing = 1;
+
+		if (!$fixture->save())
+		{
+			App::abort('500', 'Save failed');
+		}
+
+		return $fixture;
+	}
+
+	public static function endMatch($id)
+	{
+		$fixture = self::where('fixtureID', $id)
+			->firstOrFail();
+
+		$fixture->isOngoing = 0;
+
+		if ( ! $fixture->save() )
+		{
+			App::abort('500', 'Save failed');
 		}
 
 		return $fixture;

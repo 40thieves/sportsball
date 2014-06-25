@@ -55,6 +55,17 @@ global.triggerForm = {
 				console.log('Event Post Failed with response',response);
 			});
 		});
+		$('.end-match').bind('click',function(){
+			var self = $(this);
+
+			$.get('/api/fixture/end/' + self.attr('data-fixtureid'))
+			.done(function(response){
+				$('#' + self.attr('data-fixtureid')).remove();
+			})
+			.fail(function(response){
+				console.log(response);
+			});
+		});
 		
 	}
 };

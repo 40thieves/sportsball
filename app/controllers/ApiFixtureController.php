@@ -27,4 +27,14 @@ class ApiFixtureController extends ApiController {
 		return Fixture::getSingleOngoingStadium($id);
 	}
 
+	public static function startMatch($id)
+	{
+		return Fixture::startMatch($id);
+	}
+
+	public static function endMatch($id)
+	{
+		return Fixture::endMatch($id);
+	}
+
 }

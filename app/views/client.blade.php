@@ -11,6 +11,7 @@
 					<td class="goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</td>
 					<td class="goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</td>
 					<td class="team away">{{$fixture->awayTeam->teamDetails->name}}</td>
+					<td><button class="end-match" data-fixtureID="{{$fixture->fixtureID}}">End Match</button></td>
 				</tr>
 			@endforeach
 		</tbody>
