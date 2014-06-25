@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Premier League Matches</h1>
+	<h1>World Cup Matches</h1>
 
 	<table class="fixtures" cellspacing="0">
 		<tbody>
