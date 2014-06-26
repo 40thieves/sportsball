@@ -1,32 +1,22 @@
-body {
-	font-family:arial;
-}
-
 select, label {
 	display:block;
 }
 
-tr:hover {
-	cursor:pointer;
-}
+.container .jumbotron {background-color:#d6e9c6;}
+.row {margin:0;}
 
-td {
-	padding:5px;
+.fixture {
+	padding:5px;	
 	font-size:18px;
-	font-weight:bold;
+	border-radius:5px;
 }
 
-td.goals {
-	color:white;
-	background:black;
+.fixture:nth-child(odd) {
+	background-color:#d6e9c6;
 }
 
-td.team {
-	background:gray;
-	width:200px;
-}
-
-td.team.home {
+.fixture .team.home,
+.fixture .goals.homeGoals {
 	text-align:right;
 }
 

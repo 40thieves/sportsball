@@ -1,24 +1,30 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>World Cup Matches</h1>
+	<h1 class="jumbotron">World Cup Matches</h1>
 
-	<table class="fixtures" cellspacing="0">
-		<tbody>
+	<section class="row">
+		<section class="fixtures col-md-8">
+
+			<h2>Ongoing Fixtures</h2>
+					
 			@foreach ($fixtures as $fixture)
-				<tr id="{{$fixture->fixtureID}}">
-					<td class="team home">{{$fixture->homeTeam->teamDetails->name}}</td>
-					<td class="goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</td>
-					<td class="goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</td>
-					<td class="team away">{{$fixture->awayTeam->teamDetails->name}}</td>
-					<td><button class="end-match" data-fixtureID="{{$fixture->fixtureID}}">End Match</button></td>
-				</tr>
+				<article class="row fixture" id="{{$fixture->fixtureID}}">
+					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
+					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
+					<div class="col-md-1 goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</div>
+					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>
+					<!-- <td><button class="end-match" data-fixtureID="{{$fixture->fixtureID}}">End Match</button></td> -->
+				</article>
 			@endforeach
-		</tbody>
-	</table>
 
-	<section id="ticker">
-		
+		</section>
+
+		<section id="ticker col-md-4">
+
+			<h2>Latest Events</h2>
+			
+		</section>
 	</section>
 
 	<script>
