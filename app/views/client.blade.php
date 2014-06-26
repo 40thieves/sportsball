@@ -5,7 +5,7 @@
 
 	<section class="row">
 		<section class="fixtures col-md-8">
-
+									
 			<h2>Ongoing Fixtures</h2>
 					
 			@foreach ($fixtures as $fixture)
@@ -14,7 +14,6 @@
 					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
 					<div class="col-md-1 goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</div>
 					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>{{$fixture->startTime}}
-					<!-- <td><button class="end-match" data-fixtureID="{{$fixture->fixtureID}}">End Match</button></td> -->
 				</article>
 			@endforeach
 
