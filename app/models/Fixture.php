@@ -63,7 +63,7 @@ class Fixture extends Eloquent {
 
 	protected static function _getOngoingWithTeam()
 	{		
-		return self::whereBetween('startTime', [date("Y-m-d H:i:s"),date("Y-m-d H:i:s",mktime(date('H')+2))])
+		return self::whereBetween('startTime', [date("Y-m-d H:i:s"),date("Y-m-d H:i:s",mktime(date('H')-2))])
 			->with('homeTeam.teamDetails')
 			->with('awayTeam.teamDetails');
 	}
