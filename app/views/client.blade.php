@@ -5,7 +5,8 @@
 
 	<section class="row">
 		<section class="fixtures col-md-8">
-									
+
+			<?php echo date("y-m-d h:i:s"); ?>					
 			<h2>Ongoing Fixtures</h2>
 					
 			@foreach ($fixtures as $fixture)
