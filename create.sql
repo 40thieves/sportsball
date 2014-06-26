@@ -2,6 +2,14 @@ DROP DATABASE sportsball;
 CREATE DATABASE sportsball;
 USE sportsball;
 
+CREATE TABLE twitterresponse
+(
+twitterresponseID integer(8) primary key AUTO_INCREMENT,
+content longtext(),
+fixtureID integer(8) NOT NULL,
+FOREIGN KEY (fixtureID) REFERENCES fixture(fixtureID)
+);
+
 CREATE TABLE stadium
 (
 stadiumID integer(8) primary key AUTO_INCREMENT,

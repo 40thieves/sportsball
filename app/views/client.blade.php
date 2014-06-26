@@ -13,7 +13,7 @@
 					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
 					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
 					<div class="col-md-1 goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</div>
-					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>
+					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>{{$fixture->startTime}}
 					<!-- <td><button class="end-match" data-fixtureID="{{$fixture->fixtureID}}">End Match</button></td> -->
 				</article>
 			@endforeach
