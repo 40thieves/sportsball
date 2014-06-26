@@ -61,6 +61,18 @@ class Fixture extends Eloquent {
 		return $this->hasOne('Stadium', 'stadiumID');
 	}
 
+	protected static function _getTodayWithTeam()
+	{
+		return self::where('startTime','>=', date("Y-m-d H:i:s"))
+			->with('homeTeam.teamDetails')
+			->with('awayTeam.teamDetails');
+	}
+
+	public static function getAllToday()
+	{
+		return self::_getTodayWithTeam()->get();
+	}
+
 	protected static function _getOngoingWithTeam()
 	{			
 		return self::whereBetween('startTime', [date("Y-m-d H:i:s",mktime(date('H')-2)),date("Y-m-d H:i:s")])
@@ -126,36 +138,6 @@ class Fixture extends Eloquent {
 		}
 		catch (ModelNotFoundException $e) {
 			App::abort('404', 'Fixture not found');
-		}
-
-		return $fixture;
-	}
-
-	public static function startMatch($id)
-	{
-		$fixture = self::where('fixtureID', $id)
-			->firstOrFail();
-
-		$fixture->isOngoing = 1;
-
-		if (!$fixture->save())
-		{
-			App::abort('500', 'Save failed');
-		}
-
-		return $fixture;
-	}
-
-	public static function endMatch($id)
-	{
-		$fixture = self::where('fixtureID', $id)
-			->firstOrFail();
-
-		$fixture->isOngoing = 0;
-
-		if ( ! $fixture->save() )
-		{
-			App::abort('500', 'Save failed');
 		}
 
 		return $fixture;

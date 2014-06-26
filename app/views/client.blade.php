@@ -18,6 +18,17 @@
 				</article>
 			@endforeach
 
+			<h2>Coming Up</h2>
+
+			@foreach ($todaysFixtures as $fixture)
+				<article class="row fixture" id="{{$fixture->fixtureID}}">
+					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
+					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
+					<div class="col-md-1 goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</div>
+					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>{{$fixture->startTime}}
+				</article>
+			@endforeach
+
 		</section>
 
 		<section id="ticker col-md-4">
