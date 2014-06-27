@@ -218,7 +218,7 @@ class TwitterFixtureController extends Controller {
 			return [
 				'eventID' => 1,
 				'teamID' => $likelyScorer,
-				'minute' => date('m/d/Y h:i:s a', time())
+				'minute' => date('Y-m-d H:i:s')
 			];
 		}
 		

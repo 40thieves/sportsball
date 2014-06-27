@@ -20,10 +20,6 @@ select, label {
 	text-align:right;
 }
 
-section#ticker {
-	width:460px;
-}
-
 section#ticker p {
 	width:100%;
 	overflow:hidden;

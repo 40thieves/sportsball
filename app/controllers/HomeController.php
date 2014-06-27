@@ -97,4 +97,10 @@ class HomeController extends BaseController {
 		return $this->layout->content = View::make('twitter');
 	}
 
+	public function showRegistrationForm()
+	{
+		return $this->layout->content = View::make('registrationForm');
+	}
+
+
 }

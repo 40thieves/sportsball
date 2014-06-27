@@ -6,7 +6,6 @@
 	<section class="row">
 		<section class="fixtures col-md-8">
 
-			<?php echo date("y-m-d h:i:s"); ?>					
 			<h2>Ongoing Fixtures</h2>
 					
 			@foreach ($fixtures as $fixture)
@@ -14,7 +13,7 @@
 					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
 					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
 					<div class="col-md-1 goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</div>
-					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>{{$fixture->startTime}}
+					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>
 				</article>
 			@endforeach
 
@@ -23,15 +22,14 @@
 			@foreach ($todaysFixtures as $fixture)
 				<article class="row fixture" id="{{$fixture->fixtureID}}">
 					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
-					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
-					<div class="col-md-1 goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</div>
+					<div class="col-md-2 startTime" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->startTime}}</div>					
 					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>{{$fixture->startTime}}
 				</article>
 			@endforeach
 
 		</section>
 
-		<section id="ticker col-md-4">
+		<section id="ticker" class="col-md-4">
 
 			<h2>Latest Events</h2>
 			
@@ -47,4 +45,5 @@
 			channel_{{$fixture->fixtureID}}.bind('event_all', global.ticker.update);
 		@endforeach
 	</script>
+	<?php echo date("y-m-d h:i:s"); ?>					
 @stop

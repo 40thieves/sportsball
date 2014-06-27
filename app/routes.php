@@ -47,3 +47,18 @@ Route::group(['prefix' => 'api'], function() {
 
 	});
 });
+
+Route::group(['before' => 'auth.basic'],function(){
+	Route::group(['prefix' => 'admin'],function(){
+		Route::get('/',function(){
+			return "Hello Admin";
+		});		
+	});
+});
+
+Route::get('login',function(){
+	return "Please login";
+});
+
+Route::get('register','HomeController@showRegistrationForm');
+Route::post('register','UserController@createSingle');
