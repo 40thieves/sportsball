@@ -50,9 +50,9 @@ Route::group(['prefix' => 'api'], function() {
 
 Route::group(['before' => 'auth.basic'],function(){
 	Route::group(['prefix' => 'admin'],function(){
-		Route::get('/',function(){
-			return "Hello Admin";
-		});		
+		Route::get('/','AdminController@showIndex');	
+		Route::get('/fixture','AdminController@showFixture');
+		Route::get('/teams','AdminController@showTeams');
 	});
 });
 

@@ -4,8 +4,8 @@
 	<h1>Add User</h1>
 
 	<form name="registrationForm" method="POST" action="/register">
-		<label>Username</label>
-		<input type="text" name="username"/>
+		<label>Email</label>
+		<input type="email" name="email"/>
 
 		<label>Password</label>
 		<input type="password" name="password"/>		
