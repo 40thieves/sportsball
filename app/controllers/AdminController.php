@@ -14,17 +14,33 @@ class AdminController extends BaseController {
 		]);
 	}
 
-	public function showFixture()
+	public function showFixtures()
 	{
-		$this->layout->content = View::make('admin/fixture',[
-			'activePanel' => 'fixture'
+		$fixtures = Fixture::getAllOngoing();
+
+		$this->layout->content = View::make('admin/fixtures',[
+			'activePanel' => 'fixtures',
+			'fixtures' => $fixtures
 		]);
+	}
+
+	public function showNewFixture()
+	{
+		$teams = Team::getAll();
+
+		$this->layout->content = View::make('admin/fixtures/new',[
+			'activePanel' => '',
+			'teams' => $teams
+		]);	
 	}
 
 	public function showTeams()
 	{
+		$teams = Team::getAll();
+
 		$this->layout->content = View::make('admin/teams',[
-			'activePanel' => 'teams'
+			'activePanel' => 'teams',
+			'teams' => $teams
 		]);
 	}
 

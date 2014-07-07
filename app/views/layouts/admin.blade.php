@@ -16,7 +16,7 @@
 			<nav class="col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li class="{{ ($activePanel == 'overview') ? 'active' : ''}}"><a href="/admin">Overview</a></li>
-					<li class="{{ ($activePanel == 'fixture') ? 'active' : ''}}"><a href="/admin/fixture">Add Fixture</a></li>
+					<li class="{{ ($activePanel == 'fixtures') ? 'active' : ''}}"><a href="/admin/fixtures">Fixtures</a></li>
 					<li class="{{ ($activePanel == 'teams') ? 'active' : ''}}"><a href="/admin/teams">Teams</a></li>
 					<li><a href="#">Overview</a></li>
 				</ul>
