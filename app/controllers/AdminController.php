@@ -34,6 +34,13 @@ class AdminController extends BaseController {
 		]);	
 	}
 
+	public function postNewFixture()
+	{
+		Fixture::createSingle();
+
+		$this->showNewFixture();
+	}
+
 	public function showTeams()
 	{
 		$teams = Team::getAll();

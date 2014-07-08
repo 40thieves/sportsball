@@ -4,12 +4,12 @@
 	
 	<h1 class="page-header">Add Fixture</h1>
 
-	<form class="form-horizontal" name="fixtureAdd" method="POST" action="admin/fixture">
+	<form class="form-horizontal" name="fixtureAdd" method="POST" action="/admin/fixtures/new">
 
 		<div class="form-group">
 			<label class="control-label col-sm-2">Home Team</label>
 			<div class="col-sm-10">
-				<select class="form-control">
+				<select name="homeTeam" class="form-control">
 					@foreach ($teams as $team)
 					
 						<option value="{{$team->teamID}}">{{$team->name}}</option>
@@ -22,7 +22,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2">Away Team</label>
 			<div class="col-sm-10">
-				<select class="form-control">
+				<select name="awayTeam" class="form-control">
 					@foreach ($teams as $team)
 					
 						<option value="{{$team->teamID}}">{{$team->name}}</option>
@@ -43,7 +43,7 @@
 			<label class="control-label col-sm-2">Start Time</label>
             <div class="col-sm-10">
 	            <div class='input-group date'>
-		            <input type='text' class="form-control" />
+		            <input name="startTime" type='text' class="form-control" />
 		            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 	            </div>
 			</div>
