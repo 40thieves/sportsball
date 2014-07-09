@@ -170,11 +170,12 @@ class Fixture extends Eloquent {
 
 		$fixture->stadiumID = 1;
 		$fixture->hashTag = Input::get('hashTag');
-		$fixture->startTime = Input::get('startTime');
-
-		$fixture->teams = FixtureTeam::createBoth($fixture);
-
+		$fixture->startTime = date('Y-m-d H:i:s',strtotime(Input::get('startTime')));
+		
 		$fixture->save();
+
+		$teams = FixtureTeam::createBoth($fixture);
+		$fixture->teams()->saveMany($teams);
 	}
 
 }

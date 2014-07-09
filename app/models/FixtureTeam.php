@@ -40,16 +40,12 @@ class FixtureTeam extends Eloquent {
 		$homeTeam = new self;
 		$homeTeam->fixtureID = $fixture->fixtureID;
 		$homeTeam->teamID = Input::get('homeTeam');
-		$homeTeam->homeTeam = 1;
-
-		$homeTeam->save();
+		$homeTeam->homeTeam = 1;		
 
 		$awayTeam = new self;
 		$awayTeam->fixtureID = $fixture->fixtureID;
 		$awayTeam->teamID = Input::get('awayTeam');
-		$awayTeam->homeTeam = 0;
-
-		$awayTeam->save();
+		$awayTeam->homeTeam = 0;		
 
 		return [$homeTeam,$awayTeam];
 
