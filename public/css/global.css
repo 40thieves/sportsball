@@ -5,13 +5,13 @@ select, label {
 .container .jumbotron {background-color:#d6e9c6;}
 .row {margin:0;}
 
-.fixture {
+.main .row {
 	padding:5px;	
 	font-size:18px;
 	border-radius:5px;
 }
 
-.fixture:nth-child(odd) {
+.main .row:nth-child(odd) {
 	background-color:#d6e9c6;
 }
 

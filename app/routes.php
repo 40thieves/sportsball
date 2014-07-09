@@ -49,11 +49,23 @@ Route::group(['prefix' => 'api'], function() {
 });
 
 Route::group(['before' => 'auth.basic'],function(){
+	
 	Route::group(['prefix' => 'admin'],function(){
-		Route::get('/',function(){
-			return "Hello Admin";
-		});		
+		
+		Route::get('/','AdminController@showIndex');	
+		
+		Route::group(['prefix' => 'fixtures'],function(){
+
+			Route::get('/','AdminController@showFixtures');
+			
+			Route::get('/new','AdminController@showNewFixture');
+			Route::post('/new','AdminController@postNewFixture');
+
+		});
+
+		Route::get('/teams','AdminController@showTeams');
 	});
+
 });
 
 Route::get('login',function(){

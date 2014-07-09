@@ -25,7 +25,7 @@ class Fixture extends Eloquent {
 	 * @var array
 	 */
 	protected $fillable = [
-		'stadiumID','startTime','isOngoing',
+		'stadiumID','hashTag','startTime','isOngoing',
 	];
 
 	/**
@@ -162,6 +162,20 @@ class Fixture extends Eloquent {
 			'homeGoals' => isset($goals[$homeTeamId]) ? $goals[$homeTeamId] : 0,
 			'awayGoals' => isset($goals[$awayTeamId]) ? $goals[$awayTeamId] : 0,
 		];
+	}
+
+	public static function createSingle()
+	{
+		$fixture = new self;
+
+		$fixture->stadiumID = 1;
+		$fixture->hashTag = Input::get('hashTag');
+		$fixture->startTime = date('Y-m-d H:i:s',strtotime(Input::get('startTime')));
+		
+		$fixture->save();
+
+		$teams = FixtureTeam::createBoth($fixture);
+		$fixture->teams()->saveMany($teams);
 	}
 
 }

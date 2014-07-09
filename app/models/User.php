@@ -23,7 +23,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	*/
 	protected $fillable = [
-		'username',
+		'email',
 		'password'
 	];
 
@@ -80,9 +80,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public static function createSingle() {
 
-		$user = new Self;
+		$user = new self;
 
-		$user->username = Input::get('username');
+		$user->email = Input::get('email');
 		$user->password = Hash::make(Input::get('password'));
 
 		$user->save();

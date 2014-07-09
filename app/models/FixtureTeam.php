@@ -34,4 +34,20 @@ class FixtureTeam extends Eloquent {
 	{
 		return $this->hasOne('Team', 'teamID', 'teamID');
 	}
+
+	public static function createBoth($fixture) {
+		
+		$homeTeam = new self;
+		$homeTeam->fixtureID = $fixture->fixtureID;
+		$homeTeam->teamID = Input::get('homeTeam');
+		$homeTeam->homeTeam = 1;		
+
+		$awayTeam = new self;
+		$awayTeam->fixtureID = $fixture->fixtureID;
+		$awayTeam->teamID = Input::get('awayTeam');
+		$awayTeam->homeTeam = 0;		
+
+		return [$homeTeam,$awayTeam];
+
+	}
 }

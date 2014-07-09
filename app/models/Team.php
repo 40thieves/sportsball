@@ -47,4 +47,8 @@ class Team extends Eloquent {
 			->with('players')
 			->firstOrFail();
 	}
+
+	public static function getAll() {
+		return self::get();
+	}
 }
