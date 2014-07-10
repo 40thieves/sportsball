@@ -87,7 +87,7 @@ class Fixture extends Eloquent {
 
 	protected static function _getPastWithTeam()
 	{
-		return self::where('startTime','<=', mktime(date('H')+3))
+		return self::where('startTime','<=', date("Y-m-d H:i:s",mktime(date('H')+3)))
 			->with('homeTeam.teamDetails')
 			->with('awayTeam.teamDetails');
 	}
