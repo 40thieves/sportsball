@@ -8,7 +8,18 @@
 
 			<h2>Ongoing Fixtures</h2>
 					
-			@foreach ($fixtures as $fixture)
+			@foreach ($ongoingFixtures as $fixture)
+				<article class="row fixture" id="{{$fixture->fixtureID}}">
+					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
+					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
+					<div class="col-md-1 goals awayGoals" id="team-goals-{{$fixture->awayTeam->teamID}}">{{$fixture->awayTeam->goals}}</div>
+					<div class="col-md-5 team away">{{$fixture->awayTeam->teamDetails->name}}</div>
+				</article>
+			@endforeach
+
+			<h2>Recent Fixtures</h2>
+					
+			@foreach ($pastFixtures as $fixture)
 				<article class="row fixture" id="{{$fixture->fixtureID}}">
 					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
 					<div class="col-md-1 goals homeGoals" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->homeTeam->goals}}</div>
@@ -19,7 +30,7 @@
 
 			<h2>Coming Up</h2>
 
-			@foreach ($todaysFixtures as $fixture)
+			@foreach ($futureFixtures as $fixture)
 				<article class="row fixture" id="{{$fixture->fixtureID}}">
 					<div class="col-md-5 team home">{{$fixture->homeTeam->teamDetails->name}}</div>
 					<div class="col-md-2 startTime" id="team-goals-{{$fixture->homeTeam->teamID}}">{{$fixture->startTime}}</div>					
@@ -39,7 +50,7 @@
 	<script>
 		var pusher = new Pusher({{ '\'' . $pusherKey . '\'' }});
 
-		@foreach($fixtures as $fixture)
+		@foreach($ongoingFixtures as $fixture)
 			var	channel_{{$fixture->fixtureID}} = pusher.subscribe('fixture_{{$fixture->fixtureID}}');
 			channel_{{$fixture->fixtureID}}.bind('event_goal', global.goalIncrementer);
 			channel_{{$fixture->fixtureID}}.bind('event_all', global.ticker.update);

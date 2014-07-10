@@ -20,7 +20,8 @@ class HomeController extends BaseController {
 	public function showClient()
 	{
 		$ongoingFixtures = Fixture::getAllOngoing();
-		$todaysFixtures = Fixture::getAllToday();
+		$futureFixtures = Fixture::getAllFuture();
+		$pastFixtures = Fixture::getAllPast();
 
 		foreach($ongoingFixtures as $fixture)
 		{
@@ -45,7 +46,14 @@ class HomeController extends BaseController {
 			$fixture->awayTeam->goals = isset($goals[$fixture->awayTeam->teamID]) ? $goals[$fixture->awayTeam->teamID] : 0;
 		}
 
-		foreach($todaysFixtures as $fixture)
+		foreach($futureFixtures as $fixture)
+		{
+			$fixture->load('homeTeam.teamDetails', 'awayTeam.teamDetails');
+			$fixture->load('events.eventType', 'events.player');
+			$fixture->load('stadium');			
+		}
+
+		foreach($pastFixtures as $fixture)
 		{
 			$fixture->load('homeTeam.teamDetails', 'awayTeam.teamDetails');
 			$fixture->load('events.eventType', 'events.player');
@@ -70,8 +78,9 @@ class HomeController extends BaseController {
 
 		return $this->layout->content = View::make('client', [
 			'pusherKey' => Config::get('pusherer::key'),
-			'fixtures' => $ongoingFixtures,
-			'todaysFixtures' => $todaysFixtures
+			'ongoingFixtures' => $ongoingFixtures,
+			'futureFixtures' => $futureFixtures,
+			'pastFixtures' => $pastFixtures
 		]);
 	}
 

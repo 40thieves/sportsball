@@ -5,7 +5,7 @@ select, label {
 .container .jumbotron {background-color:#d6e9c6;}
 .row {margin:0;}
 
-.main .row {
+.main .row, .fixture {
 	padding:5px;	
 	font-size:18px;
 	border-radius:5px;

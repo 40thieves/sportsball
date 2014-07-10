@@ -61,16 +61,16 @@ class Fixture extends Eloquent {
 		return $this->hasOne('Stadium', 'stadiumID');
 	}
 
-	protected static function _getTodayWithTeam()
+	protected static function _getFutureWithTeam()
 	{
 		return self::where('startTime','>=', date("Y-m-d H:i:s"))
 			->with('homeTeam.teamDetails')
 			->with('awayTeam.teamDetails');
 	}
 
-	public static function getAllToday()
+	public static function getAllFuture()
 	{
-		return self::_getTodayWithTeam()->get();
+		return self::_getFutureWithTeam()->get();
 	}
 
 	protected static function _getOngoingWithTeam()
@@ -83,6 +83,18 @@ class Fixture extends Eloquent {
 	public static function getAllOngoing()
 	{
 		return self::_getOngoingWithTeam()->get();
+	}
+
+	protected static function _getPastWithTeam()
+	{
+		return self::where('startTime','<=', mktime(date('H')+3))
+			->with('homeTeam.teamDetails')
+			->with('awayTeam.teamDetails');
+	}
+
+	public static function getAllPast()
+	{
+		return self::_getPastWithTeam()->get();
 	}
 
 	public static function getSingleOngoing($id)
