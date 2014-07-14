@@ -46,6 +46,11 @@ class Fixture extends Eloquent {
 		return $this->hasMany('FixtureTeam', 'fixtureID');
 	}
 
+	public function twitterResponses()
+	{
+		return $this->hasMany('TwitterResponse','fixtureID');
+	}
+
 	public function homeTeam()
 	{
 		return $this->hasOne('FixtureTeam', 'fixtureID')->where('homeTeam', '1');
@@ -89,7 +94,8 @@ class Fixture extends Eloquent {
 	{
 		return self::where('startTime','<=', date("Y-m-d H:i:s",mktime(date('H')+3)))
 			->with('homeTeam.teamDetails')
-			->with('awayTeam.teamDetails');
+			->with('awayTeam.teamDetails')
+			->orderBy('startTime','desc');
 	}
 
 	public static function getAllPast()
@@ -97,12 +103,13 @@ class Fixture extends Eloquent {
 		return self::_getPastWithTeam()->get();
 	}
 
-	public static function getSingleOngoing($id)
+	public static function getSingle($id)
 	{
-		$fixture = self::_getOngoingWithTeam()
+		$fixture = self::_getSingleWithTeams()
 			->where('fixtureID', $id)
 			->with('events.eventType', 'events.player')
 			->with('stadium')
+			->with('twitterresponses')
 			->firstOrFail();
 
 		$goals = self::calculateGoals($fixture->events, $fixture->homeTeam->teamID, $fixture->awayTeam->teamID);
@@ -112,47 +119,9 @@ class Fixture extends Eloquent {
 		return $fixture;
 	}
 
-	public static function getSingleOngoingGoals($id)
+	protected static function _getSingleWithTeams()
 	{
-		$fixture = self::_getOngoingWithTeam()
-			->where('fixtureID', $id)
-			->with('events')
-			->firstOrFail();
-
-		$goals = self::calculateGoals($fixture->events, $fixture->homeTeam->teamID, $fixture->awayTeam->teamID);
-		$fixture->homeTeam->goals = $goals['homeGoals'];
-		$fixture->awayTeam->goals = $goals['awayGoals'];
-
-		return $fixture;
-	}
-
-	public static function getSingleOngoingTeams($id)
-	{
-		return self::_getOngoingWithTeam()
-			->where('fixtureID', $id)
-			->firstOrFail();
-	}
-
-	public static function getSingleOngoingStadium($id)
-	{
-		return self::_getOngoingWithTeam()
-			->where('fixtureID', $id)
-			->with('stadium')
-			->firstOrFail();
-	}
-
-	public static function testIsOngoing($id)
-	{
-		try {
-			$fixture = self::where('fixtureID', $id)
-				->where('isOngoing', '1')
-				->firstOrFail();
-		}
-		catch (ModelNotFoundException $e) {
-			App::abort('404', 'Fixture not found');
-		}
-
-		return $fixture;
+		return self::with('homeTeam.teamDetails')->with('awayTeam.teamDetails');
 	}
 
 	protected static function calculateGoals($events, $homeTeamId, $awayTeamId)

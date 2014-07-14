@@ -16,11 +16,23 @@ class AdminController extends BaseController {
 
 	public function showFixtures()
 	{
-		$fixtures = Fixture::getAllOngoing();
+		$ongoingFixtures = Fixture::getAllOngoing();
+		$pastFixtures = Fixture::getAllPast();
 
 		$this->layout->content = View::make('admin/fixtures',[
 			'activePanel' => 'fixtures',
-			'fixtures' => $fixtures
+			'ongoingFixtures' => $ongoingFixtures,
+			'recentFixtures' => $pastFixtures
+		]);
+	}
+
+	public function showFixtureDetails($id)
+	{
+		$fixture = Fixture::getSingle($id);
+
+		$this->layout->content = View::make('admin/fixtures/single',[
+			'activePanel' => '',
+			'fixture' => $fixture
 		]);
 	}
 
