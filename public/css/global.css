@@ -20,6 +20,10 @@ select, label {
 	text-align:right;
 }
 
+#twitterdata .panel:nth-child(odd) {
+	background-color:gray;
+}
+
 section#ticker p {
 	width:100%;
 	overflow:hidden;

@@ -57,7 +57,13 @@ Route::group(['before' => 'auth.basic'],function(){
 		Route::group(['prefix' => 'fixtures'],function(){
 
 			Route::get('/','AdminController@showFixtures');
-			Route::get('/{id}','AdminController@showFixtureDetails');
+			
+			Route::group(['prefix' => '{id}'],function(){
+				
+				Route::get('/','AdminController@showFixtureDetails');
+				Route::get('/analysis','AdminController@showFixtureAnalysis');
+
+			});
 			
 			Route::get('/new','AdminController@showNewFixture');
 			Route::post('/new','AdminController@postNewFixture');

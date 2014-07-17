@@ -17,14 +17,22 @@
 
 	</article>
 
-	<article class="panel">
+	<article id="twitterdata" class="panel">
 		<header>
 			<h2>Twitter Data</h2>
 		</header>
 
 		@foreach ($fixture->twitterresponses as $response)
 
-			<p>{{$response->content}}</p>
+			<section class="panel">
+
+			@foreach ($response->tweets as $tweet)
+				
+				<p>{{$tweet->content}}</p>
+
+			@endforeach
+
+			</section>
 
 		@endforeach
 
