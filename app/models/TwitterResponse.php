@@ -38,7 +38,7 @@ class TwitterResponse extends Eloquent {
 
 	public function tweets()
 	{
-		return $this->hasMany("tweet","twitterresponseID");
+		return $this->hasMany("Tweet","twitterresponseID");
 	}
 
 	public static function createSingle($content,$fixtureID)
