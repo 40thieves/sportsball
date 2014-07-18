@@ -31,13 +31,13 @@ class AdminController extends BaseController {
 		$fixture = Fixture::getSingle($id);
 
 		//Temporary code for data reformatting
-		foreach ($fixture->twitterresponses as $response) {
-			if ($tweets = explode("###",$response->content)) {
-				foreach ($tweets as $tweet) {
-					Tweet::createSingle($tweet,$response->twitterresponseID);
-				}
-			}
-		}
+		// foreach ($fixture->twitterresponses as $response) {
+		// 	if ($tweets = explode("###",$response->content)) {
+		// 		foreach ($tweets as $tweet) {
+		// 			Tweet::createSingle($tweet,$response->twitterresponseID);
+		// 		}
+		// 	}
+		// }
 
 		$this->layout->content = View::make('admin/fixtures/single',[
 			'activePanel' => '',
