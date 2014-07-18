@@ -36,6 +36,11 @@ class Tweet extends Eloquent {
 		'tweetID',
 	];
 
+	public function twitterresponse()
+	{
+		return $this->belongsTo('twitterresponse');
+	}
+
 	public static function createSingle($content,$twitterresponseID)
 	{
 		$tweet = new self;
