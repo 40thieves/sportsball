@@ -1,0 +1,106 @@
+<?php
+
+class FixtureFact extends Eloquent {
+
+	/**
+	 * The database table used by the model
+	 * @var string
+	 */
+	protected $table = 'fixtureFact';
+
+	/**
+	 * Turns off automatic timestamps
+	 * @var boolean
+	 */
+	public $timestamps = false;
+
+	/**
+	 * Model attributes that can be mass-assigned
+	 * @var array
+	 */
+	protected $fillable = [
+		'fixtureID',
+		'eventID',
+		'teamID',
+		'playerID',
+		'minute',
+	];
+
+	public function eventType()
+	{
+		return $this->hasOne('EventType', 'eventID', 'eventID');
+	}
+
+	public function goals()
+	{
+		return $this->hasOne('EventType', 'eventID', 'eventID')->where('eventID', '1');
+	}
+
+	public function player()
+	{
+		return $this->hasOne('Player', 'playerID', 'playerID');
+	}
+
+	public function team()
+	{
+		return $this->hasOne('Team', 'teamID', 'teamID');
+	}
+
+	public function fixture()
+	{
+		return $this->belongsTo('Fixture', 'fixtureID');
+	}
+
+
+	public static function getAllOngoing()
+	{
+		$events = self::all();
+
+		$events = $events->filter(function($event) {
+			return ($event->fixture->isOngoing == '1');
+		});
+
+		return $events->load('eventType');
+	}
+
+	public static function getSingleOngoing($id)
+	{
+		$event = self::find($id);
+
+		if ($event->fixture->isOngoing != '1')
+			return App::abort('404', 'Fixture not found');
+
+		return $event->load('eventType');
+	}
+
+	public static function createSingle($twitterEvent,$fixture)
+	{
+		$event = new self;
+
+		//TODO: Streamline the API's
+		if ($twitterEvent) {
+			$event->fixtureID = $fixture->fixtureID;
+			$event->eventID = $twitterEvent['eventID'];
+			$event->teamID = $twitterEvent['teamID'];
+			$event->minute = $twitterEvent['minute'];
+			//FIXME: Needs to be non dependant for event
+			$event->playerID = 1;
+		}
+		else {
+			$fixture = Fixture::testIsOngoing(Input::get('fixtureID'));
+
+			$event->fixtureID = $fixture->fixtureID;
+			$event->eventID = Input::get('eventID');
+			$event->teamID = Input::get('teamID');
+			$event->playerID = Input::get('playerID');
+			$event->minute = Input::get('minute');
+			
+		}
+
+		if ( ! $event->save())
+			App::abort('500', 'Save failed');
+
+		return $event;
+	}
+
+}

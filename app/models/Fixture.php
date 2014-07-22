@@ -41,6 +41,11 @@ class Fixture extends Eloquent {
 		return $this->hasMany('FixtureEvent', 'fixtureID');
 	}
 
+	public function facts()
+	{
+		return $this->hasMany('FixtureFact','fixtureID');
+	}
+
 	public function teams()
 	{
 		return $this->hasMany('FixtureTeam', 'fixtureID');

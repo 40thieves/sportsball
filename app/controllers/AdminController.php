@@ -94,6 +94,16 @@ class AdminController extends BaseController {
 		$this->showNewFixture();
 	}
 
+	public function showNewFact($id)
+	{
+		$fixture = Fixture::getSingle($id);
+		
+		$this->layout->content = View::make('admin/fixtures/single/facts',[
+			'activePanel' => '',
+			'fixture' => $fixture
+		]);
+	}
+
 	public function showTeams()
 	{
 		$teams = Team::getAll();

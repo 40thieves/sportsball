@@ -6,6 +6,21 @@
 
 	<article class="panel">
 		<header>
+			<h2>Facts</h2>
+		</header>
+
+		@foreach ($fixture->facts as $fact)
+
+			<p>{{$fact->factType->label}} {{$fact->team->name}} {{$fact->minute}}</p>
+
+		@endforeach
+		
+		<a class="btn btn-primary" href="/admin/fixtures/{{$fixture->fixtureID}}/facts">Add New</a>
+
+	</article>
+
+	<article class="panel">
+		<header>
 			<h2>Events</h2>
 		</header>
 
