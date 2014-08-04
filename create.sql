@@ -5,8 +5,10 @@ USE sportsball;
 CREATE TABLE twitterresponse
 (
 twitterresponseID integer(8) primary key AUTO_INCREMENT,
-content longtext(),
+content longtext,
 fixtureID integer(8) NOT NULL,
+created_at datetime,
+updated_at datetime,
 FOREIGN KEY (fixtureID) REFERENCES fixture(fixtureID)
 );
 

@@ -104,6 +104,11 @@ class AdminController extends BaseController {
 		]);
 	}
 
+	public function postNewFact()
+	{
+		return 'test';
+	}
+
 	public function showTeams()
 	{
 		$teams = Team::getAll();
