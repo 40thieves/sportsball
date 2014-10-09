@@ -7,8 +7,9 @@
 	@if (count($teams) > 0)
 
 		@foreach ($teams as $team)
-			<article class="row" id="{{$team->teamID}}">
-				{{$team->name}}				
+			<article class="row team" id="{{$team->teamID}}">
+				<div class="col-md-10">{{$team->name}}</div>
+				<a class="col-md-2" href="/admin/teams/{{$team->teamID}}">Details</a>
 			</article>
 		@endforeach
 

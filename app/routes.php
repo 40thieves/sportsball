@@ -75,7 +75,29 @@ Route::group(['before' => 'auth.basic'],function(){
 
 		});
 
-		Route::get('/teams','AdminController@showTeams');
+		Route::group(['prefix' => 'teams'],function(){
+
+			Route::get('/','AdminController@showTeams');
+			
+		});
+
+		Route::group(['prefix' => 'competitions'],function(){
+
+			Route::get('/','AdminCompetitionController@showOverview');
+
+			Route::group(['prefix' => 'new'],function(){
+				Route::get('/','AdminCompetitionController@showNew');
+				Route::post('/','AdminCompetitionController@postNew');
+			});
+
+			Route::group(['prefix' => '{id}'],function(){
+
+				Route::get('/','AdminCompetitionController@showSingle');
+
+			});
+
+		});
+
 	});
 
 });

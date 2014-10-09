@@ -18,7 +18,7 @@
 					<li class="{{ ($activePanel == 'overview') ? 'active' : ''}}"><a href="/admin">Overview</a></li>
 					<li class="{{ ($activePanel == 'fixtures') ? 'active' : ''}}"><a href="/admin/fixtures">Fixtures</a></li>
 					<li class="{{ ($activePanel == 'teams') ? 'active' : ''}}"><a href="/admin/teams">Teams</a></li>
-					<li><a href="#">Overview</a></li>
+					<li class="{{ ($activePanel == 'competitions') ? 'active' : ''}}"><a href="/admin/competitions">Competitions</a></li>					
 				</ul>
 			</nav>
 			<section class="col-md-10 col-md-offset-2 main">
