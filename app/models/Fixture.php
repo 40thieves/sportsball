@@ -25,7 +25,7 @@ class Fixture extends Eloquent {
 	 * @var array
 	 */
 	protected $fillable = [
-		'stadiumID','hashTag','startTime','isOngoing',
+		'competitionID','stadiumID','hashTag','startTime','isOngoing',
 	];
 
 	/**
@@ -44,12 +44,7 @@ class Fixture extends Eloquent {
 	public function facts()
 	{
 		return $this->hasMany('FixtureFact','fixtureID');
-	}
-
-	public function teams()
-	{
-		return $this->hasMany('FixtureTeam', 'fixtureID');
-	}
+	}	
 
 	public function twitterResponses()
 	{

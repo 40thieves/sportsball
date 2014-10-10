@@ -109,14 +109,4 @@ class AdminController extends BaseController {
 		return 'test';
 	}
 
-	public function showTeams()
-	{
-		$teams = Team::getAll();
-
-		$this->layout->content = View::make('admin/teams',[
-			'activePanel' => 'teams',
-			'teams' => $teams
-		]);
-	}
-
 }

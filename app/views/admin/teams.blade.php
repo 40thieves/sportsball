@@ -4,6 +4,8 @@
 	
 	<h1 class="page-header">Teams</h1>
 
+	<a class="btn btn-primary" href="/admin/teams/new">Add New Team</a>
+
 	@if (count($teams) > 0)
 
 		@foreach ($teams as $team)

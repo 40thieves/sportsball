@@ -43,7 +43,7 @@ class Team extends Eloquent {
 
 	public function competitions()
 	{
-		return $this->hasMany('competition');
+		return $this->belongsToMany('Competition');
 	}
 
 	public static function getPlayers($id) 
@@ -51,9 +51,5 @@ class Team extends Eloquent {
 		return self::where('TeamID',$id)
 			->with('players')
 			->firstOrFail();
-	}
-
-	public static function getAll() {
-		return self::get();
 	}
 }

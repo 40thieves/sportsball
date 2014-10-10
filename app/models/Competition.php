@@ -41,6 +41,11 @@ class Competition extends Eloquent {
 		return $this->belongsToMany('Team');
 	}
 
+	public function fixtures()
+	{
+		return $this->hasMany('Fixture','competitionID');
+	}
+
 	// public static function create($name)
 	// {
 	// 	$competition = new self();

@@ -77,7 +77,16 @@ Route::group(['before' => 'auth.basic'],function(){
 
 		Route::group(['prefix' => 'teams'],function(){
 
-			Route::get('/','AdminController@showTeams');
+			Route::get('/','AdminTeamController@showOverview');
+
+			Route::group(['prefix' => 'new'],function(){
+				Route::get('/','AdminTeamController@showNew');
+				Route::post('/','AdminTeamController@postNew');
+			});
+
+			Route::group(['prefix' => '{id}'],function(){
+				Route::get('/','AdminTeamController@showSingle');
+			});
 			
 		});
 
