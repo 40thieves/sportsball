@@ -20,6 +20,11 @@ Route::get('twitter','HomeController@twitter');
 
 Route::group(['prefix' => 'api'], function() {
 
+	Route::group(['prefix' => 'competitions'],function()
+	{
+		Route::get('/','ApiCompetitionController@get');
+	});
+
 	Route::get('twitter','TwitterFixtureController@getAll');
 	Route::get('mining','TwitterDataMiningController@getAll');
 
@@ -53,6 +58,10 @@ Route::group(['before' => 'auth.basic'],function(){
 	Route::group(['prefix' => 'admin'],function(){
 		
 		Route::get('/','AdminController@showIndex');	
+
+		Route::get('angular',function(){
+			return View::make('admin/angular/index');
+		});
 		
 		Route::group(['prefix' => 'fixtures'],function(){
 
