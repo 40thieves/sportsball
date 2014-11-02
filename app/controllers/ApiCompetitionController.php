@@ -9,7 +9,7 @@ class ApiCompetitionController extends ApiController {
 
 	public static function getSingle($id)
 	{
-		return FixtureEvent::getSingleOngoing($id);
+		return Competition::find($id)->with('teams')->firstOrFail();
 	}
 
 	public static function postIndex()

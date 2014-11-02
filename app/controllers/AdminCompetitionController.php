@@ -14,7 +14,20 @@ class AdminCompetitionController extends AdminController {
 	{
 		$this->layout->content = View::make('admin/competitions/single',[
 			'activePanel' => '',
-			'competition' => Competition::find($id)
+			'competition' => Competition::find($id)->with('teams')->firstOrFail()
+		]);
+	}
+
+	public function showAddNewTeam($id)
+	{
+		$competition = Competition::find($id)->with('teams')->firstOrFail();
+
+		$this->layout->content = View::make('admin/competitions/single/teams',[
+			'activePanel' => '',
+			'competition' => $competition,
+			'teams' => Team::get()->filter(function($team) use ($competition){				
+				return !in_array($team->id, $competition->teams->lists('teamID'));
+			})
 		]);
 	}
 

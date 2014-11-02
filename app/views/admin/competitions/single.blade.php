@@ -33,7 +33,7 @@
 
 		@endforeach
 		
-		<a class="btn btn-primary" href="/admin/competition/{{$competition->competitionID}}/teams">Add New</a>
+		<a class="btn btn-primary" href="/admin/competitions/{{$competition->competitionID}}/teams">Add New</a>
 
 	</article>
 

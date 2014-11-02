@@ -15,34 +15,46 @@
 	<script src="/packages/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" ></script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
 
-	<script src="/js/angular/controllers/competitionCtrl.js" type="text/javascript"></script>
+	<script src="/js/angular/controllers/competitionController.js" type="text/javascript"></script>
 	<script src="/js/angular/services/competitionService.js" type="text/javascript"></script>
-	<script src="/js/angular/app.js" type="text/javascript"></script>
 
-	<script type="text/javascript">
-		$(function(){
-			$('.date').datetimepicker();
-		})
-	</script>
+    <script type="text/javascript">
+    $(function(){
+    $('.date').datetimepicker();
+    })
+    </script>
 
 </head>
 <body>
-	
-	<div ng-app="competitionApp" ng-controller="competitionController">
-	
-		<h1 class="page-header">Competitions</h1>
 
-		<a class="btn btn-primary" href="/admin/competitions/new">Add New Competition</a>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <header class="container-fluid">
+        <section class="navbar-header">
+            <a class="navbar-brand" href='/admin'>Administrator Dashboard</a>
+        </section>
+    </header>
+</nav>
 
-		<div ng-hide="loading" ng-repeat="c in competitions">
-			
-			<p>{{ c.name }}</p>
 
-			<p><a href="#" ng-click="deleteCompetition(c.competitionID)" class="btn btn-primary">Delete</a></p>
-		</div>
+<section class="container-fluid">
+    <section class="row">
+        <nav class="col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="{{ ($activePanel == 'overview') ? 'active' : ''}}"><a href="/admin">Overview</a></li>
+                <li class="{{ ($activePanel == 'fixtures') ? 'active' : ''}}"><a href="/admin/fixtures">Fixtures</a></li>
+                <li class="{{ ($activePanel == 'teams') ? 'active' : ''}}"><a href="/admin/teams">Teams</a></li>
+                <li class="{{ ($activePanel == 'competitions') ? 'active' : ''}}"><a href="/admin/competitions">Competitions</a></li>
+            </ul>
+        </nav>
+        <section class="col-md-10 col-md-offset-2 main">
+            <div ng-view></div>
+        </section>
+    </section>
+</section>
 
-	</div>
 
+    <script src="/js/angular/app.js" type="text/javascript"></script>
 </body>
 </html>

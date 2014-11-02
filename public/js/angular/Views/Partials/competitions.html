@@ -1,0 +1,21 @@
+<div ng-app="competitionApp" ng-controller="Competition">
+
+    <h1 class="page-header">Competitions</h1>
+
+    <a class="btn btn-primary" href="/admin/competitions/new">Add New Competition</a>
+
+    <div ng-hide="loading" ng-repeat="c in competitions">
+
+        <article class="row competition" id="{{ c.competitionID }}">
+
+            <div class="col-md-8">
+                <p>{{ c.name }}</p>
+            </div>
+            <div class="col-md-4">
+                <p><a href="#" ng-click="deleteCompetition(c.competitionID)" class="btn btn-primary">Delete</a></p>
+            </div>
+
+        </article>
+    </div>
+
+</div>

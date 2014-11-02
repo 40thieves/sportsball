@@ -1,6 +1,6 @@
-angular.module('competitionService',[])
+angular.module('AdminApp.Services',[])
 
-	.factory('Competition',function($http)
+	.factory('CompetitionServices',function($http)
 	{
 		return {
 			

@@ -11,6 +11,8 @@
 |
 */
 
+Route::model('competition','Competition');
+
 Route::get('/', 'HomeController@showClient');
 
 Route::get('trigger', 'HomeController@trigger');
@@ -23,6 +25,10 @@ Route::group(['prefix' => 'api'], function() {
 	Route::group(['prefix' => 'competitions'],function()
 	{
 		Route::get('/','ApiCompetitionController@get');
+		Route::get('{competition}',function(Competition $competition)
+        {
+            return $competition;
+        });
 	});
 
 	Route::get('twitter','TwitterFixtureController@getAll');
@@ -59,8 +65,12 @@ Route::group(['before' => 'auth.basic'],function(){
 		
 		Route::get('/','AdminController@showIndex');	
 
-		Route::get('angular',function(){
-			return View::make('admin/angular/index');
+		Route::group(['prefix' => 'angular'],function(){
+
+            App::missing(function($ex){
+                return View::make('admin/angular/index');
+            });
+
 		});
 		
 		Route::group(['prefix' => 'fixtures'],function(){
@@ -111,6 +121,10 @@ Route::group(['before' => 'auth.basic'],function(){
 			Route::group(['prefix' => '{id}'],function(){
 
 				Route::get('/','AdminCompetitionController@showSingle');
+
+				Route::group(['prefix' => 'teams'],function(){
+					Route::get('/','AdminCompetitionController@showAddNewTeam');					
+				});
 
 			});
 

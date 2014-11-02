@@ -1,6 +1,6 @@
-angular.module('competitionCtrl',[])
+angular.module('AdminApp.Controllers',[])
 
-	.controller('competitionController',function($scope,$http,Competition)
+	.controller('CompetitionController',function($scope,$http,Competition)
 	{
 		$scope.CompetitionData = {};
 

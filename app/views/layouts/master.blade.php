@@ -25,7 +25,7 @@
 </head>
 <body>
 
-	<div class="container">
+	<div class="container-fluid">
 		@yield('navigation')
 		@yield('content')
 	</div>
