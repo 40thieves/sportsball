@@ -11,9 +11,15 @@
 |
 */
 
-Route::get('/', 'HomeController@showClient');
+// Route::get('/', 'HomeController@showClient');
 
-Route::get('trigger', 'HomeController@trigger');
+// Route::get('trigger', 'HomeController@trigger');
+
+// all routes that are not api will be redirected to the frontend 
+// this allows angular to route them 
+App::missing(function($exception) { 
+    return View::make('index'); 
+});
 
 Route::group(['prefix' => 'api'], function() {
 
